@@ -1,0 +1,112 @@
+{% extends 'Main_template/__MAIN_tamplate.html' %}
+{% load static %}
+{% block title %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}">
+{% endblock %}
+{% block content %}
+    <div class="contant">
+        <div id="banner-part" class="banner inner-banner">
+            <div class="container">
+                <div class="bread-crumb-main">
+                    <h1 class="banner-title">ویرایش اطلاعات</h1>
+                    <div class="breadcrumb">
+                        <ul class="inline">
+                            <li><a href="/">خانه</a></li>
+                            <li>ویرایش اطلاعات</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ptb-100">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-xl-6 col-lg-8 col-md-8 ">
+                        <form class="main-form full" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-12 mb-20">
+                                    <div class="heading-part align-center">
+                                        <h2 class="heading">ویرایش اطلاعات</h2>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <div class="card-body text-center d-flex flex-column align-items-center">
+                                           <div class="contine_img_pro">
+                                                <img id="blah" class="img-account-profile rounded-circle mb-2"
+                                                    {% if user.image_pro %}
+                                                 src="{{ user.image_pro.url }}"
+                                                    {% endif %} alt="profile" width="200px">
+                                               <label for="profile_image" id="label_profile"></label>
+
+                                           </div>
+                                                <div class="small font-italic text-muted mb-4">
+                                                    <p class="text-danger">سایز تصویر انتخابی نباید از 5MB بیشتر باشد</p>
+                                                </div>
+                                                    {{ edit_form.image_pro }}
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="{{ edit_form.first_name.id_for_lable }}">{{ edit_form.first_name.label }}</label>
+                                        {{ edit_form.first_name }}
+
+                                        {% for error in edit_form.first_name.errors %}
+                                            <div id="emailHelp" class="form-text text-danger "><p>{{ error }}</p></div>
+
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="{{ edit_form.last_name.id_for_lable }}">{{ edit_form.last_name.label }}</label>
+                                        {{ edit_form.last_name }}
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="{{ edit_form.phone.id_for_lable }}">{{ edit_form.phone.label }}</label>
+                                        {{ edit_form.phone }}
+                                        {% for error in edit_form.phone.errors %}
+                                            <div id="emailHelp" class="form-text text-danger"><p>{{ error }}</p></div>
+
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="{{ edit_form.email.id_for_lable }}">{{ edit_form.email.label }}</label>
+                                        {{ edit_form.email }}
+                                        {% for error in edit_form.email.errors %}
+                                            <div id="emailHelp" class="form-text text-danger"><p>{{ error }}</p></div>
+
+                                        {% endfor %}
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="mb-30 dit w-100">
+                                        <div class="check-box left-side mt-15">
+                                        <span>
+                                            <input type="checkbox" name="remember_me" id="remember_me" class="checkbox">
+
+                                        </span>
+                                        </div>
+                                        <button name="submit" type="submit" class="btn-color right-side">ویرایش</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script src="{% static 'js/mycustom.js' %}"></script>
+{% endblock %}

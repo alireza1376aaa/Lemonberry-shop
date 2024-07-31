@@ -1,0 +1,212 @@
+{% extends 'Main_template/__MAIN_tamplate.html' %}
+{% load static %}
+{% load humanize %}
+
+
+{% block content %}
+
+    <div class="contant">
+        <div id="banner-part" class="banner inner-banner">
+            <div class="container">
+                <div class="bread-crumb-main">
+                    <h1 class="banner-title">ثبت نهایی</h1>
+                    <div class="breadcrumb">
+                        <ul class="inline">
+                            <li><a href="/ ">خانه</a></li>
+                            <li><a href="{% url 'shopping_cart:carts' %}">سبد خرید</a></li>
+                            <li>ثبت نهایی</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="checkout-part ptb-100">
+            <div class="container">
+                {% if messages %}
+                    {% for message in messages %}
+                        {% if message.tags == 'error' %}
+                            <div class="col-md-8">
+                                <div class="alert alert-warning">
+                                    <p>{{ message }}</p>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+
+                {% endif %}
+                <form class="main-form" method="post">
+                {% for foo in form.errors %}
+                {{ foo }}
+                {% endfor %}
+
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-12 col-lg-8">
+                            <div class="mb-md-30">
+                                <div class="mb-60">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="heading-part mb-30 mb-sm-20">
+                                                <h3>مشخصات مشتری</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label for="full-name">نام و نام خانوادگی*</label>
+                                                {{ form.fullname }}
+                                                <p>{{ form.fullname.errors }}</p>
+                                                <p class="text-danger">{{ form.fullname.errors|first }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label for="phone-no">تلفن *</label>
+                                                {{ form.phone }}
+                                                <p class="text-danger">{{ form.phone.errors|first }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label for="address">آدرس*</label>
+                                                {{ form.address }}
+                                                <p class="text-danger">{{ form.address.errors|first }}</p>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-12">
+                                            <div class="form-group">
+                                                <label for="zip">کد پستی*</label>
+                                                {{ form.post_code }}
+                                                <p class="text-danger">{{ form.post_code.errors|first }}</p>
+                                                {{ form.factor_code}}
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group">
+                                                <label for="city">شهر*</label>
+                                                {{ form.city_location }}
+                                                <p class="text-danger">{{ form.city_location.errors|first }}</p>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-group">
+                                                <label for="city">استان*</label>
+                                                {{ form.city }}
+                                                <p id="city_vall" class="d-none">{{ form.initial.city }}</p>
+                                                <p class="text-danger">{{ form.city.errors|first }}</p>
+
+                                            </div>
+                                        </div>
+
+                                        {% if messages %}
+                                            {% for message in messages %}
+                                                {% if message.tags == 'success' %}
+                                                    <div class="col-md-12 col-12">
+                                                        <div class="alert alert-success">
+                                                            <p>
+                                                                سفارش شما با موفقیت ثبت شد در این مرحله شما به پنل
+                                                                پرداخت ارسال میشوید ولی به دلیل تستی بودن پروژه ایمیلی
+                                                                برای شما ارسال میشود حاوی لینک روی ان بزنید و سفارش تستی
+                                                                خود را مثلا نهایی کنی
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                {% endif %}
+                                            {% endfor %}
+
+                                        {% endif %}
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="heading-part mb-30">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-4">
+                            <div class="heading-part mb-30 mb-sm-20">
+                                <h3>اقلام سفارش ما</h3>
+                            </div>
+                            <div class="checkout-products sidebar-product mb-60">
+                                <ul>
+                                    {% for basket in order.cart_set.all %}
+                                        <li>
+                                            <div class="pro-media"><a
+                                                    href="{{ basket.product_id.get_absolute_url }}"><img
+                                                    alt="product" src="{{ basket.product_id.product_image.url }}"></a>
+                                            </div>
+                                            <div class="pro-detail-info"><a
+                                                    href="{{ basket.product_id.get_absolute_url }}"
+                                                    class="product-title">{{ basket.product_id.product_name }}</a>
+                                                <div class="price-box">
+                                                    {% if basket.product.product_type == 'discount' %}
+                                                        <span class="price"> تومان{{ basket.product_id.discount|intcomma:False }}</span>
+                                                    {% else %}
+                                                        <span class="price"> تومان{{ basket.product_id.product_price|intcomma:False }}</span>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="checkout-qty">
+                                                    <div>
+                                                        <label>تعداد </label>
+                                                        <span class="info-deta"> {{ basket.count }}</span> /
+                                                        <span class="info-deta"> {{ basket.color_size.product_color }}</span>
+                                                        /
+                                                        <span class="info-deta"> {{ basket.color_size.product_size }} ({{ basket.color_size.product_size.product_unit }})</span>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            <div class="complete-order-detail commun-table gray-bg mb-30">
+                                <div class="table-responsive">
+                                    <table class="table m-0">
+                                        <tbody>
+                                        <tr>
+                                            <td><b>تاریخ</b></td>
+                                            <td>{{ date }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>مبلغ کل</b></td>
+                                            <td>
+                                                <div class="price-box"><span class="price">{{ total|intcomma:False }} تومان</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>روش پرداخت</b></td>
+                                            <td>اینترنتی</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>شماره سفارش</b></td>
+                                            <td>{{ order.Order_number }}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <button class="btn full btn-color">ثبت سفارش</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}
+
+{% block javascript %}
+    <script src="{% static 'js/city.js' %}"></script>
+{% endblock %}

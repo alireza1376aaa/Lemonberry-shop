@@ -1,0 +1,13 @@
+#profile_image{
+    display: none;
+}
+.contine_img_pro{
+    position: relative;
+}
+#label_profile {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+}

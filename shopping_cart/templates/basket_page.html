@@ -1,0 +1,32 @@
+{% extends 'Main_template/__MAIN_tamplate.html' %}
+{% load static %}
+
+
+{% block content %}
+
+
+    <div class="contant">
+        <div id="banner-part" class="banner inner-banner">
+            <div class="container">
+                <div class="bread-crumb-main">
+                    <h1 class="banner-title">سبد خرید</h1>
+                    <div class="breadcrumb">
+                        <ul class="inline">
+                            <li><a href="/">خانه</a></li>
+                            <li>سبد خرید</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ptb-100">
+            {% include 'include/include_shoping_cart.html' %}
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block javascript %}
+    <script src="{% static 'js/mycustom.js' %}"></script>
+{% endblock %}

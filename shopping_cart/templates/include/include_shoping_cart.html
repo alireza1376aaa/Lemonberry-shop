@@ -1,0 +1,180 @@
+{% load humanize %}
+{% url 'shopping_cart:finallt_carts' as finalcart %}
+
+<div class="container" id="reza">
+    <div class="cart-item-table commun-table">
+        <div class="table-responsive">
+            <table class="table border mb-0">
+                <thead>
+                <tr>
+                    <th>تصویر</th>
+                    <th>نام محصول</th>
+                    <th>رنگ محصول</th>
+                    <th>سایز محصول</th>
+                    <th>قیمت</th>
+                    <th>تعداد</th>
+                    <th>مبلغ کل</th>
+                    <th>حذف</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for basket in order.cart_set.all %}
+
+                    <tr>
+                        <td>
+                            <a href="{{ basket.product_id.get_absolute_url }}">
+                                <div class="product-image">
+                                    <img alt="Eshoper" src="{{ basket.product_id.product_image.url }}">
+                                </div>
+                            </a>
+                        </td>
+                        <td>
+                            <div class="product-title">
+                                <a href="{{ basket.product_id.get_absolute_url }}">{{ basket.product_id.product_name }}</a>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="color_product_cart ">
+                                <span class="price">{{ basket.color_size.product_color }}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="color_product_cart ">
+                                <span class="price">{{ basket.color_size.product_size }} ({{ basket.color_size.product_size.product_unit }})</span>
+                            </div>
+                        </td>
+                        <td>
+                            <ul>
+                                <li>
+                                    <div class="base-price price-box">
+                                        {% if basket.product_id.product_type == 'discount' %}
+                                            <span class="price"> تومان{{ basket.product_id.discount|intcomma:False }}</span>
+                                            <br>
+                                            <del class="price old-price">
+                                                تومان{{ basket.product_id.product_price|intcomma:False }}</del>
+
+                                        {% else %}
+                                            <span class="price"> تومان{{ basket.product_id.product_price|intcomma:False }}</span>
+                                        {% endif %}
+                                    </div>
+                                </li>
+                            </ul>
+                        </td>
+                        <td>
+                            <div class="input-box">
+                                <div class="custom-qty">
+
+                                    <button onclick="changeOrderDetailCount({{ basket.product_id.id }},'minus');var result = document.getElementById('qty{{ forloop.counter }}'); var qty{{ forloop.counter }} = result.value; if( !isNaN( qty{{ forloop.counter }} ) &amp;&amp; qty{{ forloop.counter }} > 1 ) result.value--;return false;"
+                                            class="reduced items" type="button"><i class="fa fa-minus"></i>
+                                    </button>
+                                    <input type="number" name="count" value="{{ basket.count }}"
+                                           class="input-text qty" id="qty{{ forloop.counter }}" min="1"
+                                           required="">
+                                    <button onclick="changeOrderDetailCount({{ basket.product_id.id }},'plus');var result = document.getElementById('qty{{ forloop.counter }}'); var qty{{ forloop.counter }} = result.value; if (!isNaN(qty{{ forloop.counter }}))result.value++;return false;"
+                                            class="increase items" type="button"><i class="fa fa-plus"></i>
+                                    </button>
+
+                                </div>
+
+                            </div>
+                        </td>
+                        <td>
+                            <div class="total-price price-box">
+                                <span class="price">{{ basket.total_price|intcomma:False }} تومان</span>
+                            </div>
+                        </td>
+                        <td>
+                            <a href="{% url 'shopping_cart:remove' detail_id=basket.id %}"
+                               class="btn small btn-color">
+                                <i title="Remove Item From Cart" data-id="100"
+                                   class="fa fa-trash cart-remove-item"></i>
+                            </a>
+                        </td>
+                    </tr>
+
+
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="mb-30">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mt-30">
+
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mt-30 left-side float-none-sm">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+    <div class="mtb-30">
+        <div class="row">
+            <div class="col-md-6 mb-sm-20">
+                <div class="estimate">
+                    <div class="heading-part mb-20">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="cart-total-table commun-table">
+                    <div class="table-responsive">
+                        <table class="table border">
+                            <thead>
+                            <tr>
+                                <th colspan="2">مبلغ کل</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>مبلغ کل</td>
+                                <td>
+                                    <div class="price-box">
+                                        <span class="price">{{ order.total_price|intcomma:False }} تومان</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>هزینه ارسال</td>
+                                <td>
+                                    {% if total > 500000 %}
+                                        <div class="price-box">
+                                        <span class="price">0</span>
+                                    {% else %}
+                                        <div class="price-box">
+                                        <span class="price">30,000 تومان</span>
+                                    {% endif %}
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>مبلغ قابل پرداخت</b></td>
+                                <td>
+                                        <div class="price-box">
+                                        <span class="price">{{ total|intcomma:False }} تومان </span>
+                                            
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="mt-30">
+        <div class="row">
+            <div class="col-12">
+                <div class="left-side float-none-xs">
+                    <a href="{{ finalcart }}" class="btn btn-color {% if total <  1 %}disabled {% endif %}">ثبت نهایی</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

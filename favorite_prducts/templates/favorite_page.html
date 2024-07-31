@@ -1,0 +1,98 @@
+{% extends 'Main_template/__MAIN_tamplate.html' %}
+{% load static %}
+{% load humanize %}
+
+{% url 'product_shop:list_view' as list %}
+
+{% block content %}
+
+
+    <div class="contant">
+        <div id="banner-part" class="banner inner-banner">
+            <div class="container">
+                <div class="bread-crumb-main">
+                     <h1 class="banner-title">علاقه مندی ها</h1>
+                     <div class="breadcrumb">
+                         <ul class="inline">
+                            <li><a href="/">خانه</a></li>
+                            <li>علاقه مندی ها</li>
+                            </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ptb-100">
+            <div class="container">
+                <div class="cart-item-table commun-table">
+                    <div class="table-responsive">
+                         <table class="table border mb-0">
+                            <thead>
+                                    <tr>
+                                    <th>تصویر</th>
+                                    <th>نام محصول</th>
+                                    <th>قیمت</th>
+                                    <th>حذف</th>
+                                    </tr>
+                            </thead>
+                            <tbody>
+                             {% for basket in favoriteDitails %}
+
+                                   <tr>
+                                    <td>
+                                        <a href="{{ basket.product.get_absolute_url }}">
+                                        <div class="product-image">
+                                        <img alt="Eshoper" src="{{ basket.product.product_image.url }}">
+                                        </div>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <div class="product-title">
+                                            <a href="{{ basket.product.get_absolute_url }}">{{ basket.product.product_name }}</a>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <ul>
+                                            <li>
+                                                <div class="base-price price-box">
+                                                     {% if basket.product.product_type == 'discount'%}
+                                                    <span class="price"> تومان{{ basket.product.discount|intcomma:False }}</span>
+                                                    {% else %}
+                                                    <span class="price"> تومان{{ basket.product.product_price|intcomma:False }}</span>
+                                                {% endif %}
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        <a href="remove_favorite/{{ basket.id }}" class="btn small btn-color">
+                                            <i title="Remove Item From Cart" data-id="100" class="fa fa-trash cart-remove-item"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+
+
+                            {% endfor %}
+                            </tbody>
+                            </table>
+                    </div>
+                </div>
+                <div class="mb-30">
+                <div class="row">
+                <div class="col-md-6">
+                <div class="mt-30">
+
+                </div>
+                </div>
+                <div class="col-md-6">
+                <div class="mt-30 left-side float-none-sm">
+                </div>
+                </div>
+                </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

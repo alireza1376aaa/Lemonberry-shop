@@ -1,0 +1,513 @@
+{% extends 'Main_template/__MAIN_tamplate.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+    {% url 'home_page' as Home %}
+    {% url 'favorite_product:favorite' as favorite_url %}
+    {% url 'product_det:commentform' as comment_url %}
+    {% url 'shopping_cart:basket' as cart %}
+    {% url 'shopping_cart:single_basket' as Cart_basker %}
+    <div class="contant">
+        <div id="banner-part" class="banner inner-banner">
+            <div class="container">
+                <div class="bread-crumb-main">
+                    <h1 class="banner-title">{{ object.product_name }}</h1>
+                    <div class="breadcrumb">
+                        <ul class="inline">
+                            <li><a href="{{ Home }}">خانه</a></li>
+                            <li>
+                                <a href="{% url 'product:list_view_men' gender=object.product_gender cat=object.collect_products.name_collect_product_main %}">
+                                    {% if object.product_gender == 'women' %}
+                                        زنانه
+                                    {% elif object.product_gender == 'men' %}
+                                        مردانه
+                                    {% else %}
+                                        بچگانه
+                                    {% endif %}
+
+                                </a>
+                            </li>
+                            <li>{{ object.product_name }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ptb-100">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-5 col-md-6 col-12">
+                        <div class="align-center mb-md-30">
+
+                            <ul id="glasscase" class="gc-start">
+                                <li><img src="{{ object.product_image.url }}" alt=""/></li>
+                                {% for gallery in grouped_gallery %}
+                                    {% for gallerys in gallery %}
+                                        <li><img src="{{ gallerys.image.url }}" alt=""/></li>
+                                    {% endfor %}
+
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-7 col-md-6 col-12">
+                        <form method="post" action="{{ cart }}" id="cart_form_sub">
+                            <div class="product-detail-main">
+                                <div class="product-item-details">
+                                    <h1 class="product-item-name">{{ object.product_name }} {{ object.products_tag }}</h1>
+                                    {% if object.product_type == 'simple' or object.product_type == 'new' %}
+                                        <div class="price-box"><span
+                                                class="price">{{ object.product_price|intcomma:False }} تومان</span>
+                                        </div>
+                                    {% else %}
+                                        <div class="price-box"><span class="price">{{ object.discount|intcomma:False }} تومان</span>
+                                            <del class="price old-price">{{ object.product_price|intcomma:False }}
+                                                تومان
+                                            </del>
+                                        </div>
+                                    {% endif %}
+                                    <div class="rating-main">
+
+                                        <span>{{ len_massage }} دیدگاه</span>
+                                    </div>
+                                    <div class="product-des">
+                                        <p>{{ object.product_discription }}</p>
+                                    </div>
+                                    <ul class="product-list">
+                                        <li><i class="fa fa-check"></i> ضمانت هفت روز بازگشت کالا</li>
+                                        <li><i class="fa fa-check"></i> تحویل سریع و آسان</li>
+                                        <li><i class="fa fa-check"></i> ضمانت اصل بودن کالا</li>
+                                    </ul>
+                                    <hr class="mb-20">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="table-listing qty mb-20">
+                                                <div class="row">
+                                                    <div class="col-xl-2 col-md-3 col-sm-12">
+                                                        <span>تعداد</span>
+                                                    </div>
+                                                    <div class="col-xl-10 col-md-9 col-sm-12">
+                                                        <div class="custom-qty">
+
+                                                            <button onclick="var result = document.getElementById('qty1'); var qty1 = result.value; if( !isNaN( qty1 ) && qty1 > 1 ) result.value--;return false;"
+                                                                    class="reduced items" type="button"><i
+                                                                    class="fa fa-minus"></i></button>
+                                                            {% csrf_token %}
+                                                            {{ basket.product_id }}
+                                                            {{ basket.count }}
+                                                            <button onclick="var result = document.getElementById('qty1'); var qty1 = result.value; if (!isNaN(qty1))result.value++;return false;"
+                                                                    class="increase items" type="button"><i
+                                                                    class="fa fa-plus"></i></button>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="table-listing product-size select-arrow mb-20">
+                                            <div class="row">
+                                                <div class="col-xl-2 col-md-3 col-sm-12">
+                                                    <span>انتخاب سایز </span>
+                                                </div>
+                                                <div class="col-xl-10 col-md-9 col-sm-12">
+                                                    <select class="selectpicker full" id="select-by-size" required
+                                                            name="count_repo_size">
+                                                        <option selected="selected" disabled hidden>سایز خود را انتخاب
+                                                            کنید
+                                                        </option>
+                                                        {% for size_name in color_size %}
+
+                                                            <option value="{{ size_name.product_size }}">{{ size_name.product_size__product_size }}
+                                                                ({{ size_name.product_size__product_unit }})
+                                                            </option>
+
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="table-listing product-color select-arrow mb-20">
+                                            <div class="row">
+                                                <div class="col-xl-2 col-md-3 col-12">
+                                                    <span>انتخاب رنگ</span>
+                                                </div>
+                                                <div class="col-xl-10 col-md-9 col-12">
+                                                    <select class="selectpicker full" id="select-by-color" required
+                                                            name="count_repo_color">
+                                                        {% include 'products/include/color_include.html' %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% if messages %}
+
+                                    <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-8 offset-md-2">
+                                            {% for message in messages %}
+                                                {% if message.tags == 'error' %}
+                                                    <div class="alert alert-danger alert-dismissible fade show"
+                                                         role="alert">
+                                                {% else %}
+                                                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show"
+                                                         role="alert">
+                                                {% endif %}
+                                            {{ message }}
+
+                                            </div>
+                                            {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+
+                                <hr class="mb-20">
+                                <p class="text-danger" id="error_text_size_color"></p>
+
+                                <div class="product-details-btn">
+                                    <ul>
+                                        <li class="icon cart-icon" id='cart_button'>
+
+                                            <a onclick="basket_click()" class="btn btn-color"><span></span>افزودن به سبد
+                                                خرید
+                                            </a>
+
+
+                                        </li>
+                        </form>
+
+                        <li class="icon wishlist-icon">
+                            <form method="post"
+                                  {% if favorite_check %}action='{% url 'favorite_product:remove' favorite_id=object.id %}'
+                                  {% else %} action='{{ favorite_url }}'{% endif %}>
+
+                                {% csrf_token %}
+                                {{ favorite.product_id }}
+
+                                <a class="btn btn-transparent"><span
+                                        class="{% if favorite_check %}select_favarit{% endif %}"><button
+                                        style="border:none" type="submit"></button> </span></a>
+                            </form>
+
+                        </li>
+                        <li class="icon compare-icon">
+                            {# <a href="#" class="btn btn-transparent"><span></span></a>#}
+                        </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+
+    <section class="product-tab-part position-r pb-100">
+        <div class="container">
+            <div class="product-tab-inner">
+                <div class="row">
+                    <div class="col-12">
+                        <div id="tabs">
+                            <ul class="nav nav-tabs">
+                                <li><a class="tab-Description selected" title="Description">توضیحات محصول</a></li>
+                                <li><a class="tab-Tags" title="Tags">برچسب ها</a></li>
+                                <li><a class="tab-Review" title="Review">دیدگاه ها</a></li>
+                            </ul>
+                        </div>
+                        <div id="items">
+                            <div class="tab_content">
+                                <ul>
+                                    <li>
+                                        <div class="items-Description selected">
+                                            <h4 class="mb-4">{{ object.product_discription }}</h4>
+                                            <table class="table table-hover borderless col-12 col-md-6 borderless">
+                                                <tbody>
+                                                {% if object.discription.title_1 and object.discription.discription_1 %}
+                                                <tr>
+                                                        <td>{{ object.discription.title_1 }}</td>
+                                                        <td><b>{{ object.discription.discription_1 }}</b></td>
+
+                                                </tr>
+                                                {% endif %}
+                                                  {% if object.discription.title_2 and object.discription.discription_2 %}
+                                                <tr>
+                                                        <td>{{ object.discription.title_2 }}</td>
+                                                        <td><b>{{ object.discription.discription_2 }}</b></td>
+
+                                                </tr>
+                                                {% endif %}
+                                                  {% if object.discription.title_3 and object.discription.discription_3 %}
+                                                <tr>
+                                                        <td>{{ object.discription.title_3 }}</td>
+                                                        <td><b>{{ object.discription.discription_3 }}</b></td>
+
+                                                </tr>
+                                                {% endif %}
+                                                  {% if object.discription.title_4 and object.discription.discription_4 %}
+                                                <tr>
+                                                        <td>{{ object.discription.title_4 }}</td>
+                                                        <td><b>{{ object.discription.discription_4 }}</b></td>
+
+                                                </tr>
+                                                {% endif %}
+                                                  {% if object.discription.title_5 and object.discription.discription_5 %}
+                                                <tr>
+                                                        <td>{{ object.discription.title_5 }}</td>
+                                                        <td><b>{{ object.discription.discription_5 }}</b></td>
+
+                                                </tr>
+                                                {% endif %}
+                                                  {% if object.discription.title_6 and object.discription.discription_6 %}
+                                                <tr>
+                                                        <td>{{ object.discription.title_6 }}</td>
+                                                        <td><b>{{ object.discription.discription_6 }}</b></td>
+
+                                                </tr>
+                                                {% endif %}
+                                                  {% if object.discription.title_7 and object.discription.discription_7 %}
+                                                <tr>
+                                                        <td>{{ object.discription.title_7 }}</td>
+                                                        <td><b>{{ object.discription.discription_7 }}</b></td>
+
+                                                </tr>
+                                                {% endif %}
+                                                  {% if object.discription.title_8 and object.discription.discription_8 %}
+                                                <tr>
+                                                        <td>{{ object.discription.title_8 }}</td>
+                                                        <td><b>{{ object.discription.discription_8 }}</b></td>
+
+                                                </tr>
+                                                {% endif %}
+                                                  {% if object.discription.title_9 and object.discription.discription_9 %}
+                                                <tr>
+                                                        <td>{{ object.discription.title_9 }}</td>
+                                                        <td><b>{{ object.discription.discription_9 }}</b></td>
+
+                                                </tr>
+                                                {% endif %}
+                                                  {% if object.discription.title_10 and object.discription.discription_10 %}
+                                                <tr>
+                                                        <td>{{ object.discription.title_10 }}</td>
+                                                        <td><b>{{ object.discription.discription_10 }}</b></td>
+
+                                                </tr>
+                                                {% endif %}
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="items-Tags">
+                                            {% for tag_name in tag.all %}
+                                                <a href="/product/list_view/search?q={{ tag_name }}"
+                                                   class="badge badge-secondary text-light font-weight-light p-1">{{ tag_name }}</a>
+                                            {% endfor %}
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="items-Review">
+                                            <div class="comment-part">
+                                                <h3 class="head-three">{{ len_massage }} دیدگاه</h3>
+                                                <ul class="comment-list mt-30">
+                                                    {% for comment in comment_massage %}
+                                                        <li>
+                                                            <div class="btn small mr-3 mb-2
+                                                             {% if comment.subject == 'راضی هستم از خرید' %}secsuss_btn_sublect
+                                                             {% elif comment.subject == 'راضی نیستم از خرید' %}danger_btn_sublect
+                                                             {% elif comment.subject == 'خرید نکردم' %}warning_btn_sublect
+                                                             {% elif comment.subject == 'پیشنهاد میکنم' %}secsuss_btn_sublect
+                                                             {% elif comment.subject == 'پیشنهاد نمیکنم' %}danger_btn_sublect
+                                                             {% elif comment.subject == 'معمولی بود' %}warning_btn_sublect
+                                                             {% elif comment.subject == 'سوال دارم' %}
+                                                             {% endif %}
+                                                            ">{{ comment.subject }}</div>
+                                                            <div class="comment-user">
+                                                                <img src="{{ comment.user.image_pro.url }}"
+                                                                     alt="comment-img" style="height: 85px">
+                                                            </div>
+                                                            <div class="comment-detail ">
+                                                                <span class="commenter">{{ comment.user.get_full_name }}</span>
+                                                                <p>{{ comment.massege }}</p>
+                                                                <div class="reply-btn btn btn-color small"><a
+                                                                        onclick="get_comment({{ comment.id }})">پاسخ</a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="clearfix"></div>
+                                                        </li>
+                                                        <li>
+                                                            <ul class="comment-list child-comment">
+                                                                {% for foo in comment.comment_set.all %}
+                                                                    <li>
+                                                                        <div class="btn small mr-3 mb-2
+                                                                         {% if foo.subject == 'راضی هستم از خرید' %}secsuss_btn_sublect
+                                                                         {% elif foo.subject == 'راضی نیستم از خرید' %}danger_btn_sublect
+                                                                         {% elif foo.subject == 'خرید نکردم' %}warning_btn_sublect
+                                                                         {% elif foo.subject == 'پیشنهاد میکنم' %}secsuss_btn_sublect
+                                                                         {% elif foo.subject == 'پیشنهاد نمیکنم' %}danger_btn_sublect
+                                                                         {% elif foo.subject == 'معمولی بود' %}warning_btn_sublect
+                                                                         {% elif foo.subject == 'سوال دارم' %}
+                                                                         {% endif %}
+                                                                        ">{{ foo.subject }}</div>
+                                                                        <div class="comment-user">
+                                                                            <img src="{{ foo.user.image_pro.url }}"
+                                                                                 alt="comment-img" style="height: 85px">
+                                                                        </div>
+                                                                        <div class="comment-detail">
+                                                                            <span class="commenter">{{ foo.user.get_full_name }}</span>
+                                                                            <p>{{ foo.massege }}</p>
+                                                                        </div>
+                                                                        <div class="clearfix"></div>
+                                                                    </li>
+                                                                {% endfor %}
+
+
+                                                            </ul>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                            <div class="leave-comment-part pt-100" id="form_comment">
+                                                <h3 class="head-three">دیدگاه خود را بنویسید</h3>
+                                                <form class="main-form" method="post" action="{{ comment_url }}">
+
+                                                    {% csrf_token %}
+                                                    <div class="row">
+                                                        {{ comment_form.parent }}
+                                                        {{ comment_form.product_id }}
+
+                                                        <div class="col-md-12">
+                                                            <div class="form-group mb-30 ">
+                                                                {{ comment_form.subject }}
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-12">
+                                                            <div class="form-group mb-30">
+                                                                {{ comment_form.massege }}
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <button type="submit" class="btn-color">ارسال دیدگاه
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="product-section pb-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="heading-part text-center mb-30 mb-sm-20">
+                        <h2 class="main_title">محصولات مرتبط</h2>
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="position-r">
+                <div class="row">
+                    <div class="product-slider owl-carousel position-initial">
+                        {% for sugests in sugest %}
+                            {% for p in sugests %}
+                                <div class="item">
+                                    <div class="product-item">
+                                        <div class="product-image">
+                                            <a href="{{ p.get_absolute_url }}">
+                                                <img src="{{ p.product_image.url }}" alt="">
+                                            </a>
+                                        </div>
+                                        <div class="product-details-outer">
+                                            <div class="product-details">
+                                                <div class="product-title">
+                                                    <a href="{{ p.get_absolute_url }}">{{ p.product_name }}</a>
+                                                </div>
+                                                <div class="price-box">
+                                                    {% if p.product_type == 'discount' %}
+                                                        <del class="price old-price">{{ p.product_price|intcomma:False }}
+                                                            تومان
+                                                        </del><br>
+                                                        <span class="price ">{{ p.discount|intcomma:False }} تومان</span>
+                                                    {% else %}
+                                                        <span class="price">{{ p.product_price|intcomma:False }} تومان</span>
+
+                                                    {% endif %}
+
+                                                </div>
+                                            </div>
+                                            <div class="product-details-btn">
+                                                <ul>
+                                                    <li class="icon cart-icon">
+                                                        <form method="post" action="{{ Cart_basker }}">
+                                                            {% csrf_token %}
+
+                                                            <input name="productid_small" value="{{ p.id }}"
+                                                                   type="hidden">
+                                                            <input name="count_small" value="1" type="hidden">
+                                                            <input name="count_reposit"
+                                                                   value="{{ p.count_set.first.id }}" type="hidden">
+
+
+                                                            <a class="btn btn-transparent"><span><button
+                                                                    style="border:none" type="submit"></button> </span></a>
+                                                        </form>
+
+                                                    </li>
+                                                    <li class="icon wishlist-icon">
+                                                        <form method="post"
+
+                                                              {% if p.id in collect_favorite %}action='{% url 'favorite_product:remove' favorite_id=p.id %}'
+                                                              {% else %} action='{{ favorite_url }}'{% endif %}>
+                                                            {% csrf_token %}
+
+                                                            <input name="salam" value="{{ p.id }}" type="hidden">
+
+
+                                                            <a class="btn btn-transparent"><span
+                                                                    class="{% if p.id in collect_favorite %}select_favarit{% endif %}"><button
+                                                                    style="border:none" type="submit"></button> </span></a>
+                                                        </form>
+
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            {% endfor %}
+                        {% endfor %}
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+{% endblock %}
+
+{% block javascript %}
+    <script src="{% static 'js/mycustom.js' %}"></script>
+{% endblock %}

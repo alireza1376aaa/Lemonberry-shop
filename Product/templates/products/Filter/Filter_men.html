@@ -1,0 +1,159 @@
+{% load humanize %}
+
+<div class="sidebar mb-md-30">
+    <div class="sidebar-category sidebar-default">
+
+        <div class="category-content">
+            <h2 class="cat-title">دسته بندی</h2>
+            <ul class="pl-0 mb-0">
+                {% for collectss in collect_type %}
+                    <li>
+                        {% if collectss.gender in select_gender %}
+                        <a href="{% url 'product:list_view_men' gender=select_gender.1 cat=collectss.name_collect_product_main %}"><h4>{{ collectss }}</h4></a>
+                        {% for collect in collectss.collect_product_set.all %}
+                            {% if collect.gender in select_gender %}
+                            <a href="{% url 'product:list_view_men' gender=select_gender.1 cat=collect.name_collect_product_main %}">{{ collect }}</a>
+                            {% endif %}
+                        {% endfor %}
+                        {% endif %}
+
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+
+    </div>
+    <form method="get" class="sidebar-default" name="form_filter">
+        <input type="hidden" value="True" name="check_filter">
+        <div class="category-content">
+            <h2 class="cat-title">فیلتر بر اساس</h2>
+            <a class="btn btn-color small btn-filter mb-20" onclick="remove_filter()"><i
+                    class="fa fa-close"></i><span>حذف فیلتر</span></a>
+            <button type="submit" class="btn btn-outline-success small btn-filter mb-20">فیلتر کردن</button>
+
+            <div class="mb-20">
+                <div class="inner-title">نوع</div>
+                <ul>
+                            {% for filter in collect %}
+
+                                <li>
+                                    <div class="check-box">
+                                        <span>
+                                            <input{% if filter.collect_products_id in active.type %} checked {% endif %}
+                                                                                    type="checkbox"
+                                                                                    class="checkbox"
+                                                                                    id="type{{ forloop.counter }}"
+                                                                                    name="type"
+                                                                                    value="{{ filter.collect_products_id }}">
+                                            <label for="type{{ forloop.counter }}">{{ filter.collect_products__title_collect_product_main }} </label>
+                                        </span>
+                                    </div>
+                                </li>
+
+                            {% endfor %}
+
+                </ul>
+            </div>
+            <div class="mb-20">
+                <div class="inner-title">قیمت</div>
+                <ul>
+                    {% for x,y in price.values %}
+                        <li>
+                            <div class="check-box">
+                                                    <span>
+                                                        <input{% if y in active.price %} checked {% endif %}
+                                                                                         type="checkbox"
+                                                                                         class="checkbox"
+                                                                                         id="price{{ forloop.counter }}"
+                                                                                         name="price"
+                                                                                         value="{{ x }},{{ y }}">
+                                                        <label for="price{{ forloop.counter }}"> {{ x|intcomma:False }} تا {{ y|intcomma:False }}تومان </label>
+                                                    </span>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="mb-20">
+                <div class="inner-title">برند</div>
+                <ul>
+                    {% for product_filter in brand %}
+                        <li>
+                            <div class="check-box">
+                                                    <span>
+                                                        <input{% if product_filter.product_brand_id in active.brand %}
+                                                            checked {% endif %} type="checkbox" class="checkbox"
+                                                            id="brand{{ forloop.counter }}"
+                                                            name="brand" value="{{ product_filter.product_brand_id }}">
+                                                        <label for="brand{{ forloop.counter }}">{{ product_filter.product_brand__product_brand }} </label>
+                                                    </span>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="">
+                <div class="inner-title">رنگ</div>
+                <ul>
+                    {% for product_filter in colors %}
+                        <li>
+                            <div class="check-box">
+                                <span>
+                                    <input {% if product_filter.count__product_color_id in active.color %}
+                                        checked {% endif %} type="checkbox" class="checkbox"
+                                                            id="color{{ forloop.counter }}"
+                                                            name="color"
+                                                            value="{{ product_filter.count__product_color_id }}">
+                                    <label for="color{{ forloop.counter }}"
+                                           class="{{ product_filter.count__product_color__product_color }}">{{ product_filter.count__product_color__product_color }}</label>
+                                </span>
+                            </div>
+
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </form>
+
+    <div class="sidebar-default">
+        <div class="sidebar-product">
+            <h2 class="cat-title">آخرین محصولات</h2>
+            <ul>
+                {% for sugest_time in sugest %}
+                    {% if sugest_time.product_type == 'discount' %}
+                        <li>
+                            <div class="pro-media"><a href="{{ sugest_time.get_absolute_url }}"><img
+                                    alt="{{ sugest_time.product_name }}"
+                                    src="{{ sugest_time.product_image.url }}"></a></div>
+                            <div class="pro-detail-info"><a
+                                    href="{{ sugest_time.get_absolute_url }}"
+                                    class="product-title">{{ sugest_time.product_name }}</a>
+                                <div class="price-box">
+                                    {#                                                    <span class="price">{{ sugest_time.discount|intcomma:False  }} تومان</span>#}
+                                    {#                                                    <del class="price old-price">{{ sugest_time.product_price|intcomma:False  }} تومان</del>#}
+                                </div>
+
+                            </div>
+                        </li>
+                    {% endif %}
+                    {% if sugest_time.product_type != 'discount' %}
+
+                        <li>
+                            <div class="pro-media"><a href="{{ sugest_time.get_absolute_url }}"><img
+                                    alt="{{ sugest_time.product_name }}"
+                                    src="{{ sugest_time.product_image.url }}"></a></div>
+                            <div class="pro-detail-info"><a
+                                    href="{{ sugest_time.get_absolute_url }}"
+                                    class="product-title">{{ sugest_time.product_name }}</a>
+                                {#                                                    <div class="price-box"> <span class="price">{{ sugest_time.product_price|intcomma:False  }} تومان</span> </div>#}
+
+                            </div>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,244 @@
+{% load humanize %}
+{% url 'favorite_product:favorite' as favorite_url %}
+{% url 'shopping_cart:single_basket' as Cart_basker %}
+
+{% if obj.product_type == 'simple' %}
+    <div class="col-lg-4 col-md-4 col-6">
+        <div class="product-item">
+            <div class="product-image">
+                <a href="{{ obj.get_absolute_url }}">
+                    <img src="{% if obj.product_image %}{{ obj.product_image.url }}{% endif %}"
+                         alt="{{ obj.product_name }}">
+                </a>
+            </div>
+            <div class="product-details-outer">
+                <div class="product-details">
+                    <div class="product-title">
+                        <a href="{{ obj.get_absolute_url }}">{{ obj.product_name }}</a>
+                    </div>
+                    <div class="price-box">
+                        <span class="price">{{ obj.product_price|intcomma:False }} تومان</span>
+                    </div>
+                </div>
+                <div class="product-details-btn">
+                    <ul>
+                        <li class="icon cart-icon">
+                            <form method="post" action="{{ Cart_basker }}">
+                                {% csrf_token %}
+
+                                <input name="productid_small" value="{{ obj.id }}" type="hidden">
+                                <input name="count_small" value="1" type="hidden">
+                                {% for foo in obj.count_set.all|slice:":3" %}
+                                    {% if foo.count_pro > 0 %}
+                                        <input name="count_reposit" value="{{ foo.id }}" type="hidden">
+                                    {% endif %}
+                                {% endfor %}                                <a class="btn btn-transparent"><span><button
+                                    style="border:none" type="submit"></button> </span></a>
+                            </form>
+                        </li>
+                        <li class="icon wishlist-icon">
+                            <form method="post"
+
+                                  {% if obj.id in collect_favorite %}action='{% url 'favorite_product:remove' favorite_id=obj.id %}'
+                                  {% else %} action='{{ favorite_url }}'{% endif %}>
+                                {% csrf_token %}
+
+                                <input name="salam" value="{{ obj.id }}" type="hidden">
+
+
+                                <a class="btn btn-transparent"><span
+                                        class="{% if obj.id in collect_favorite %}select_favarit{% endif %}"><button
+                                        style="border:none" type="submit"></button> </span></a>
+                            </form>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+{% if obj.product_type == 'new' and obj.price_discount == 0 %}
+    <div class="col-lg-4 col-md-4 col-6">
+        <div class="product-item">
+            <div class="product-image">
+                <div class="new-label"><span>جدید</span></div>
+
+                <a href="{{ obj.get_absolute_url }}">
+                    <img src="{{ obj.product_image.url }}" alt="{{ obj.product_name }}">
+                </a>
+            </div>
+
+            <div class="product-details-outer">
+                <div class="product-details">
+                    <div class="product-title">
+                        <a href="{{ obj.get_absolute_url }}">{{ obj.product_name }}</a>
+                    </div>
+                    <div class="price-box">
+                        <span class="price">{{ obj.product_price|intcomma:False }} تومان</span>
+                    </div>
+                </div>
+                <div class="product-details-btn">
+                    <ul>
+                        <li class="icon cart-icon">
+                            <form method="post" action="{{ Cart_basker }}">
+                                {% csrf_token %}
+
+                                <input name="productid_small" value="{{ obj.id }}" type="hidden">
+                                <input name="count_small" value="1" type="hidden">
+                                {% for foo in obj.count_set.all|slice:":3" %}
+                                    {% if foo.count_pro > 0 %}
+                                        <input name="count_reposit" value="{{ foo.id }}" type="hidden">
+                                    {% endif %}
+                                {% endfor %}                                <a class="btn btn-transparent"><span><button
+                                    style="border:none" type="submit"></button> </span></a>
+                            </form>
+                        </li>
+                        <li class="icon wishlist-icon">
+                            <form method="post"
+
+                                  {% if obj.id in collect_favorite %}action='{% url 'favorite_product:remove' favorite_id=obj.id %}'
+                                  {% else %} action='{{ favorite_url }}'{% endif %}>
+                                {% csrf_token %}
+
+                                <input name="salam" value="{{ obj.id }}" type="hidden">
+
+                                <a class="btn btn-transparent"><span
+                                        class="{% if obj.id in collect_favorite %}select_favarit{% endif %}"><button
+                                        style="border:none" type="submit"></button> </span></a>
+                            </form>
+
+                        </li>
+
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+{% if obj.product_type == 'discount' %}
+    <div class="col-lg-4 col-md-4 col-6">
+        <div class="product-item">
+            <div class="product-image">
+                <div class="sale-label"><span>تخفیف</span></div>
+
+                <a href="{{ obj.get_absolute_url }}">
+                    <img src="{{ obj.product_image.url }}" alt="{{ obj.product_name }}">
+                </a>
+            </div>
+
+            <div class="product-details-outer">
+                <div class="product-details">
+                    <div class="product-title">
+                        <a href="{{ obj.get_absolute_url }}">{{ obj.product_name }}</a>
+                    </div>
+                    <div class="price-box">
+                        <span class="price">{{ obj.discount|intcomma:False }} تومان</span>
+                        <del class="price old-price">{{ obj.product_price|intcomma:False }} تومان</del>
+                    </div>
+                </div>
+                <div class="product-details-btn">
+                    <ul>
+                        <li class="icon cart-icon">
+                            <form method="post" action="{{ Cart_basker }}">
+                                {% csrf_token %}
+
+                                <input name="productid_small" value="{{ obj.id }}" type="hidden">
+                                <input name="count_small" value="1" type="hidden">
+                                {% for foo in obj.count_set.all|slice:":3" %}
+                                    {% if foo.count_pro > 0 %}
+                                        <input name="count_reposit" value="{{ foo.id }}" type="hidden">
+                                    {% endif %}
+                                {% endfor %}
+
+                                <a class="btn btn-transparent"><span><button style="border:none" type="submit"></button> </span></a>
+                            </form>
+
+                        </li>
+                        <li class="icon wishlist-icon">
+                            <form method="post"
+
+                                  {% if obj.id in collect_favorite %}action='{% url 'favorite_product:remove' favorite_id=obj.id %}'
+                                  {% else %} action='{{ favorite_url }}'{% endif %}>
+                                {% csrf_token %}
+
+                                <input name="salam" value="{{ obj.id }}" type="hidden">
+
+
+                                <a class="btn btn-transparent"><span
+                                        class="{% if obj.id in collect_favorite %}select_favarit{% endif %}"><button
+                                        style="border:none" type="submit"></button> </span></a>
+                            </form>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+{% if obj.product_type == 'new' and obj.price_discount > 0 %}
+    <div class="col-lg-4 col-md-4 col-6">
+        <div class="product-item">
+            <div class="product-image">
+                <div class="sale-label"><span>تخفیف</span></div>
+                <div class="new-label"><span>جدید</span></div>
+
+                <a href="{{ obj.get_absolute_url }}">
+                    <img src="{{ obj.product_image.url }}" alt="{{ obj.product_name }}">
+                </a>
+            </div>
+
+            <div class="product-details-outer">
+                <div class="product-details">
+                    <div class="product-title">
+                        <a href="{{ obj.get_absolute_url }}">{{ obj.product_name }}</a>
+                    </div>
+                    <div class="price-box">
+                        <span class="price">{{ obj.discount|intcomma:False }} تومان</span>
+                        <del class="price old-price">{{ obj.product_price|intcomma:False }} تومان</del>
+                    </div>
+                </div>
+                <div class="product-details-btn">
+                    <ul>
+                        <li class="icon cart-icon">
+                            <form method="post" action="{{ Cart_basker }}">
+                                {% csrf_token %}
+
+                                <input name="productid_small" value="{{ obj.id }}" type="hidden">
+                                <input name="count_small" value="1" type="hidden">
+                                {% for foo in obj.count_set.all|slice:":3" %}
+                                    {% if foo.count_pro > 0 %}
+                                        <input name="count_reposit" value="{{ foo.id }}" type="hidden">
+                                    {% endif %}
+                                {% endfor %}                                <a class="btn btn-transparent"><span><button
+                                    style="border:none" type="submit"></button> </span></a>
+                            </form>
+                        </li>
+                        <li class="icon wishlist-icon">
+                            <form method="post"
+
+                                  {% if obj.id in collect_favorite %}action='{% url 'favorite_product:remove' favorite_id=obj.id %}'
+                                  {% else %} action='{{ favorite_url }}'{% endif %}>
+                                {% csrf_token %}
+
+                                <input name="salam" value="{{ obj.id }}" type="hidden">
+
+
+                                <a class="btn btn-transparent"><span
+                                        class="{% if obj.id in collect_favorite %}select_favarit{% endif %}"><button
+                                        style="border:none" type="submit"></button> </span></a>
+                            </form>
+
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}

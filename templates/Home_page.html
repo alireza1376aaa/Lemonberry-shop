@@ -1,0 +1,899 @@
+{% extends 'Main_template/__MAIN_tamplate.html' %}
+{% load static %}
+{% load humanize %}
+{% load jalali_tags %}
+{% block title %}
+
+{% endblock %}
+
+
+{% block content %}
+    {% url 'favorite_product:favorite' as favorite_url %}
+    {% url 'shopping_cart:single_basket' as Cart_basker %}
+    <section id="banner-part" class="menu-section pb-100">
+        <div class="banner main-banner owl-carousel">
+            {% for slider in sliders %}
+                <div class="banner-1">
+                    <img src="{{ slider.slider_image.url }}" alt="{{ slider.main_title }}" style="height: 574px">
+                    <div class="banner-detail">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="banner-detail-inner">
+                                        <span class="subtitle1">{{ slider.about_title }}</span>
+                                        <h1 class="banner-title">{{ slider.main_title }}</h1>
+                                        <div class="subtitle2">
+                                            <span class="part1">{{ slider.seasion_title }}</span>
+                                            <span class="part2">{{ slider.seasion_title_1 }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <div class="sub-banner-part pb-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="sub-banner-box">
+                        <a href="{{ collection_slider.slider_image1_url }}">
+                            <img class="d-none d-md-block" src="{{ collection_slider.slider_image1.url }}"
+                                 alt="{{ collection_slider.main_title }}" style="height: 560px" width="380px">
+                            <img class="d-block d-md-none" src="{{ collection_slider.slider_image1_responsive.url }}"
+                                 alt="{{ collection_slider.main_title }}" style="height: 171px" width="510px">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="sub-banner-box">
+                                <a href="{{ collection_slider.slider_image2_url }}">
+                                    <img class="d-none d-md-block" src="{{ collection_slider.slider_image2.url }}"
+                                         alt="{{ collection_slider.main_title }}" style="height: 265px" width="515px">
+                                    <img class="d-block d-md-none"
+                                         src="{{ collection_slider.slider_image2_responsive.url }}"
+                                         alt="{{ collection_slider.main_title }}" style="height: 171px" width="510px">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="sub-banner-box">
+                                <a href="{{ collection_slider.slider_image3_url }}">
+                                    <img class="d-none d-md-block" src="{{ collection_slider.slider_image3.url }}"
+                                         alt="{{ collection_slider.main_title }}" style="height: 265px" width="243px">
+                                    <img class="d-block d-md-none"
+                                         src="{{ collection_slider.slider_image3_responsive.url }}"
+                                         alt="{{ collection_slider.main_title }}" style="height: 171px" width="510px">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="sub-banner-box">
+                                <a href="{{ collection_slider.slider_image4_url }}">
+                                    <img class="d-none d-md-block" src="{{ collection_slider.slider_image4.url }}"
+                                         alt="{{ collection_slider.main_title }}" style="height: 265px" width="790px">
+                                    <img class="d-block d-md-none"
+                                         src="{{ collection_slider.slider_image4_responsive.url }}"
+                                         alt="{{ collection_slider.main_title }}" style="height: 171px" width="510px">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <section id="services-part" class="menu-section services-part position-r pb-100">
+        <div class="container">
+            <div class="ser-feature-block mb_-30 center-sm">
+                <div class="row">
+                    <div class="col-lg-4 col-12">
+                        <div class="services-box mb-30">
+                            <div class="services-box-inner">
+                                <div class="services-icon services1">
+                                    <img src="{% static 'images/ser-icon1.svg' %}" alt="">
+                                </div>
+                                <div class="services-detail">
+                                    <h3 class="ser-title">ارسال رایگان</h3>
+                                    <div class="ser-subtitle">ارسال به تمام نقاط ایران</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-12">
+                        <div class="services-box mb-30">
+                            <div class="services-box-inner">
+                                <div class="services-icon services2">
+                                    <img src="{% static 'images/ser-icon2.svg' %}" alt="">
+                                </div>
+                                <div class="services-detail">
+                                    <h3 class="ser-title">هدایای ویژه</h3>
+                                    <div class="ser-subtitle">هدایای ویژه در ایران استایل</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-12">
+                        <div class="services-box mb-30">
+                            <div class="services-box-inner">
+                                <div class="services-icon services3">
+                                    <img src="{% static 'images/ser-icon3.svg' %}" alt="">
+                                </div>
+                                <div class="services-detail">
+                                    <h3 class="ser-title">ضمانت خرید</h3>
+                                    <div class="ser-subtitle">دارای نماد اعتماد و رسانه</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="product-section pb-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="heading-part text-center mb-30 mb-sm-20">
+                        <h2 class="main_title">محصولات ویژه</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                {% for special in Special %}
+                    <div class="col-lg-3 col-md-4 col-6">
+                        <div class="product-item">
+                            <div class="product-image">
+                                <div class="sale-label"><span>تخفیف</span></div>
+                                <a href="{{ special.get_absolute_url }}">
+                                    {% if special.product_image %}
+                                        <img src="{{ special.product_image.url }}" alt="{{ special.product_name }}">
+                                    {% endif %}
+                                </a>
+                            </div>
+                            <div class="product-details-outer">
+                                <div class="product-details">
+                                    <div class="product-title">
+                                        <a href="{{ special.get_absolute_url }}">{{ special.product_name }}</a>
+                                    </div>
+                                    <div class="price-box">
+                                        <span class="price">{{ special.discount|intcomma:False }} تومان</span>
+                                        <del class="price old-price">{{ special.product_price|intcomma:False }} تومان
+                                        </del>
+
+                                    </div>
+                                </div>
+                                <div class="product-details-btn">
+                                    <ul>
+                                        <li class="icon cart-icon">
+                                            <form method="post" action="{{ Cart_basker }}">
+                                                {% csrf_token %}
+
+                                                <input name="productid_small" value="{{ special.id }}" type="hidden">
+                                                <input name="count_small" value="1" type="hidden">
+                                                <input name="count_reposit" value="{{ special.count_set.first.id }}"
+                                                       type="hidden">
+                                                <a class="btn btn-transparent"><span><button style="border:none"
+                                                                                             type="submit"></button> </span></a>
+                                            </form>
+                                        </li>
+                                        <li class="icon wishlist-icon">
+                                            <form method="post"
+
+                                                  {% if special.id in collect_favorite %}action='{% url 'favorite_product:remove' favorite_id=special.id %}'
+                                                  {% else %} action='{{ favorite_url }}'{% endif %}>
+                                                {% csrf_token %}
+
+                                                <input name="salam" value="{{ special.id }}" type="hidden">
+
+
+                                                <a class="btn btn-transparent"><span
+                                                        class="{% if special.id in collect_favorite %}select_favarit{% endif %}"><button
+                                                        style="border:none" type="submit"></button> </span></a>
+                                            </form>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+        </div>
+    </section>
+
+
+    <section class="testimonial-section position-r ptb-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="heading-part text-center mb-30 mb-sm-20">
+                        <h2 class="main_title">آخرین دیدگاه ها</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-slider owl-carousel position-initial">
+                {% for coment in main_commet %}
+                    <div class="item testimonial-main">
+                        <div class="client-img-main">
+                            <div class="client-img">
+                                <img alt="" src="{{ coment.user.image_pro.url }}">
+                            </div>
+                            <div class="quote-img">
+                                <img src="{% static 'images/quote-img.png' %}" alt="">
+                            </div>
+                        </div>
+                        <div class="clear-fix"></div>
+                        <div class="client-detail">
+                            <p>{{ coment.massege }}</p>
+                            <h4 class="sub-title client-title">{{ coment.user.get_full_name }} </h4>
+                            <div class="designation">{{ coment.date|to_jalali:'%Y/%m' }}</div>
+
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </section>
+
+
+    <section class="product-section ptb-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="heading-part text-center mb-30 mb-sm-20">
+                        <h2 class="main_title">محصولات جدید</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="position-r">
+                <div class="row">
+                    <div class="product-slider owl-carousel position-initial">
+                        {% for obj in new_product %}
+                            {% if obj.product_type == 'simple' %}
+                                <div class="item">
+                                    <div class="product-item">
+                                        <div class="product-image">
+                                            <a href="{{ obj.get_absolute_url }}">
+                                                {% if obj.product_image %}
+                                                    {% if obj.product_image %}
+                                                        <img src="{{ obj.product_image.url }}"
+                                                             alt="{{ obj.product_name }}">
+                                                    {% endif %}
+                                                {% endif %}
+                                            </a>
+                                        </div>
+                                        <div class="product-details-outer">
+                                            <div class="product-details">
+                                                <div class="product-title">
+                                                    <a href="{{ obj.get_absolute_url }}">{{ obj.product_name }}</a>
+                                                </div>
+                                                <div class="price-box">
+                                                    <span class="price">{{ obj.product_price|intcomma:False }} تومان</span>
+                                                </div>
+                                            </div>
+                                            <div class="product-details-btn">
+                                                <ul>
+                                                    <li class="icon cart-icon">
+                                                        <form method="post" action="{{ Cart_basker }}">
+                                                            {% csrf_token %}
+
+                                                            <input name="productid_small" value="{{ obj.id }}"
+                                                                   type="hidden">
+                                                            <input name="count_small" value="1" type="hidden">
+                                                            <input name="count_reposit"
+                                                                   value="{{ obj.count_set.first.id }}"
+                                                                   type="hidden">
+                                                            <a class="btn btn-transparent"><span><button
+                                                                    style="border:none"
+                                                                    type="submit"></button> </span></a>
+                                                        </form>
+                                                    </li>
+                                                    <li class="icon wishlist-icon">
+                                                        <form method="post"
+
+                                                              {% if obj.id in collect_favorite %}action='{% url 'favorite_product:remove' favorite_id=obj.id %}'
+                                                              {% else %} action='{{ favorite_url }}'{% endif %}>
+                                                            {% csrf_token %}
+
+                                                            <input name="salam" value="{{ obj.id }}" type="hidden">
+
+
+                                                            <a class="btn btn-transparent"><span
+                                                                    class="{% if obj.id in collect_favorite %}select_favarit{% endif %}"><button
+                                                                    style="border:none" type="submit"></button> </span></a>
+                                                        </form>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                            {% if obj.product_type == 'new' and obj.price_discount == 0 %}
+                                <div class="item">
+                                    <div class="product-item">
+                                        <div class="product-image">
+                                            <div class="new-label"><span>جدید</span></div>
+                                            <a href="{{ obj.get_absolute_url }}">
+                                                {% if obj.product_image %}
+                                                    {% if obj.product_image %}
+                                                        <img src="{{ obj.product_image.url }}"
+                                                             alt="{{ obj.product_name }}">
+                                                    {% endif %}
+                                                {% endif %}
+                                            </a>
+                                        </div>
+                                        <div class="product-details-outer">
+                                            <div class="product-details">
+                                                <div class="product-title">
+                                                    <a href="{{ obj.get_absolute_url }}">{{ obj.product_name }}</a>
+                                                </div>
+                                                <div class="price-box">
+                                                    <span class="price">{{ obj.product_price|intcomma:False }} تومان</span>
+                                                </div>
+                                            </div>
+                                            <div class="product-details-btn">
+                                                <ul>
+                                                    <li class="icon cart-icon">
+                                                        <form method="post" action="{{ Cart_basker }}">
+                                                            {% csrf_token %}
+
+                                                            <input name="productid_small" value="{{ obj.id }}"
+                                                                   type="hidden">
+                                                            <input name="count_small" value="1" type="hidden">
+                                                            <input name="count_reposit"
+                                                                   value="{{ obj.count_set.first.id }}"
+                                                                   type="hidden">
+                                                            <a class="btn btn-transparent"><span><button
+                                                                    style="border:none"
+                                                                    type="submit"></button> </span></a>
+                                                        </form>
+                                                    </li>
+                                                    <li class="icon wishlist-icon">
+                                                        <form method="post"
+
+                                                              {% if obj.id in collect_favorite %}action='{% url 'favorite_product:remove' favorite_id=obj.id %}'
+                                                              {% else %} action='{{ favorite_url }}'{% endif %}>
+                                                            {% csrf_token %}
+
+                                                            <input name="salam" value="{{ obj.id }}" type="hidden">
+
+
+                                                            <a class="btn btn-transparent"><span
+                                                                    class="{% if obj.id in collect_favorite %}select_favarit{% endif %}"><button
+                                                                    style="border:none" type="submit"></button> </span></a>
+                                                        </form>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                            {% if obj.product_type == 'discount' %}
+                                <div class="item">
+                                    <div class="product-item">
+                                        <div class="product-image">
+                                            <div class="sale-label"><span>تخفیف</span></div>
+                                            <a href="{{ obj.get_absolute_url }}">
+                                                {% if obj.product_image %}
+                                                    {% if obj.product_image %}
+                                                        <img src="{{ obj.product_image.url }}"
+                                                             alt="{{ obj.product_name }}">
+                                                    {% endif %}
+                                                {% endif %}
+                                            </a>
+                                        </div>
+                                        <div class="product-details-outer">
+                                            <div class="product-details">
+                                                <div class="product-title">
+                                                    <a href="{{ obj.get_absolute_url }}">{{ obj.product_name }}</a>
+                                                </div>
+                                                <div class="price-box">
+                                                    <span class="price">{{ obj.discount|intcomma:False }} تومان</span>
+                                                    <del class="price old-price">{{ obj.product_price|intcomma:False }}
+                                                        تومان
+                                                    </del>
+                                                </div>
+                                            </div>
+                                            <div class="product-details-btn">
+                                                <ul>
+                                                    <li class="icon cart-icon">
+                                                        <form method="post" action="{{ Cart_basker }}">
+                                                            {% csrf_token %}
+
+                                                            <input name="productid_small" value="{{ obj.id }}"
+                                                                   type="hidden">
+                                                            <input name="count_small" value="1" type="hidden">
+                                                            <input name="count_reposit"
+                                                                   value="{{ obj.count_set.first.id }}"
+                                                                   type="hidden">
+                                                            <a class="btn btn-transparent"><span><button
+                                                                    style="border:none"
+                                                                    type="submit"></button> </span></a>
+                                                        </form>
+                                                    </li>
+                                                    <li class="icon wishlist-icon">
+                                                        <form method="post"
+
+                                                              {% if obj.id in collect_favorite %}action='{% url 'favorite_product:remove' favorite_id=obj.id %}'
+                                                              {% else %} action='{{ favorite_url }}'{% endif %}>
+                                                            {% csrf_token %}
+
+                                                            <input name="salam" value="{{ obj.id }}" type="hidden">
+
+
+                                                            <a class="btn btn-transparent"><span
+                                                                    class="{% if obj.id in collect_favorite %}select_favarit{% endif %}"><button
+                                                                    style="border:none" type="submit"></button> </span></a>
+                                                        </form>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                            {% if obj.product_type == 'new' and obj.price_discount > 0 %}
+                                <div class="item">
+                                    <div class="product-item">
+                                        <div class="product-image">
+                                            <div class="sale-label"><span>تخفیف</span></div>
+                                            <div class="new-label"><span>جدید</span></div>
+                                            <a href="{{ obj.get_absolute_url }}">
+                                                {% if obj.product_image %}
+                                                    {% if obj.product_image %}
+                                                        <img src="{{ obj.product_image.url }}"
+                                                             alt="{{ obj.product_name }}">
+                                                    {% endif %}
+                                                {% endif %}
+                                            </a>
+                                        </div>
+                                        <div class="product-details-outer">
+                                            <div class="product-details">
+                                                <div class="product-title">
+                                                    <a href="{{ obj.get_absolute_url }}">{{ obj.product_name }}</a>
+                                                </div>
+                                                <div class="price-box">
+                                                    <span class="price">{{ obj.discount|intcomma:False }} تومان</span>
+                                                    <del class="price old-price">{{ obj.product_price|intcomma:False }}
+                                                        تومان
+                                                    </del>
+                                                </div>
+                                            </div>
+                                            <div class="product-details-btn">
+                                                <ul>
+                                                    <li class="icon cart-icon">
+                                                        <form method="post" action="{{ Cart_basker }}">
+                                                            {% csrf_token %}
+
+                                                            <input name="productid_small" value="{{ obj.id }}"
+                                                                   type="hidden">
+                                                            <input name="count_small" value="1" type="hidden">
+                                                            <input name="count_reposit"
+                                                                   value="{{ obj.count_set.first.id }}"
+                                                                   type="hidden">
+                                                            <a class="btn btn-transparent"><span><button
+                                                                    style="border:none"
+                                                                    type="submit"></button> </span></a>
+                                                        </form>
+                                                    </li>
+                                                    <li class="icon wishlist-icon">
+                                                        <form method="post"
+
+                                                              {% if obj.id in collect_favorite %}action='{% url 'favorite_product:remove' favorite_id=obj.id %}'
+                                                              {% else %} action='{{ favorite_url }}'{% endif %}>
+                                                            {% csrf_token %}
+
+                                                            <input name="salam" value="{{ obj.id }}" type="hidden">
+
+
+                                                            <a class="btn btn-transparent"><span
+                                                                    class="{% if obj.id in collect_favorite %}select_favarit{% endif %}"><button
+                                                                    style="border:none" type="submit"></button> </span></a>
+                                                        </form>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <div class="brand-part pb-100">
+        <div class="container">
+            <div class="brand-part-inner">
+                <div class="row">
+                    <div class="brand-slider owl-carousel">
+                        <div class="item">
+                            <img src="{% static 'images/brand-img1.png' %}" alt="brand-img">
+                        </div>
+                        <div class="item">
+                            <img src="{% static 'images/brand-img2.png' %}" alt="brand-img">
+                        </div>
+                        <div class="item">
+                            <img src="{% static 'images/brand-img3.png' %}" alt="brand-img">
+                        </div>
+                        <div class="item">
+                            <img src="{% static 'images/brand-img4.png' %}" alt="brand-img">
+                        </div>
+                        <div class="item">
+                            <img src="{% static 'images/brand-img5.png' %}" alt="brand-img">
+                        </div>
+                        <div class="item">
+                            <img src="{% static 'images/brand-img6.png' %}" alt="brand-img">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <section class="product-section ptb-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="heading-part text-center mb-30 mb-sm-20">
+                        <h2 class="main_title">محصولات پربازدید</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="position-r">
+                <div class="row">
+                    <div class="product-slider owl-carousel position-initial">
+                        {% for obj in views %}
+                            {% if obj.product_type == 'simple' %}
+                                <div class="item">
+                                    <div class="product-item">
+                                        <div class="product-image">
+                                            <a href="{{ obj.get_absolute_url }}">
+                                                {% if obj.product_image %}
+                                                    <img src="{{ obj.product_image.url }}" alt="{{ obj.product_name }}">
+                                                {% endif %}
+                                            </a>
+                                        </div>
+                                        <div class="product-details-outer">
+                                            <div class="product-details">
+                                                <div class="product-title">
+                                                    <a href="{{ obj.get_absolute_url }}">{{ obj.product_name }}</a>
+                                                </div>
+                                                <div class="price-box">
+                                                    <span class="price">{{ obj.product_price|intcomma:False }} تومان</span>
+                                                </div>
+                                            </div>
+                                            <div class="product-details-btn">
+                                                <ul>
+                                                    <li class="icon cart-icon">
+                                                        <form method="post" action="{{ Cart_basker }}">
+                                                            {% csrf_token %}
+
+                                                            <input name="productid_small" value="{{ obj.id }}"
+                                                                   type="hidden">
+                                                            <input name="count_small" value="1" type="hidden">
+                                                            <input name="count_reposit"
+                                                                   value="{{ obj.count_set.first.id }}"
+                                                                   type="hidden">
+                                                            <a class="btn btn-transparent"><span><button
+                                                                    style="border:none"
+                                                                    type="submit"></button> </span></a>
+                                                        </form>
+                                                    </li>
+                                                    <li class="icon wishlist-icon">
+                                                        <form method="post"
+
+                                                              {% if obj.id in collect_favorite %}action='{% url 'favorite_product:remove' favorite_id=obj.id %}'
+                                                              {% else %} action='{{ favorite_url }}'{% endif %}>
+                                                            {% csrf_token %}
+
+                                                            <input name="salam" value="{{ obj.id }}" type="hidden">
+
+
+                                                            <a class="btn btn-transparent"><span
+                                                                    class="{% if obj.id in collect_favorite %}select_favarit{% endif %}"><button
+                                                                    style="border:none" type="submit"></button> </span></a>
+                                                        </form>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                            {% if obj.product_type == 'new' and obj.price_discount == 0 %}
+                                <div class="item">
+                                    <div class="product-item">
+                                        <div class="product-image">
+                                            <div class="new-label"><span>جدید</span></div>
+                                            <a href="{{ obj.get_absolute_url }}">
+                                                {% if obj.product_image %}
+                                                    <img src="{{ obj.product_image.url }}" alt="{{ obj.product_name }}">
+                                                {% endif %}
+                                            </a>
+                                        </div>
+                                        <div class="product-details-outer">
+                                            <div class="product-details">
+                                                <div class="product-title">
+                                                    <a href="{{ obj.get_absolute_url }}">{{ obj.product_name }}</a>
+                                                </div>
+                                                <div class="price-box">
+                                                    <span class="price">{{ obj.product_price|intcomma:False }} تومان</span>
+                                                </div>
+                                            </div>
+                                            <div class="product-details-btn">
+                                                <ul>
+                                                    <li class="icon cart-icon">
+                                                        <form method="post" action="{{ Cart_basker }}">
+                                                            {% csrf_token %}
+
+                                                            <input name="productid_small" value="{{ obj.id }}"
+                                                                   type="hidden">
+                                                            <input name="count_small" value="1" type="hidden">
+                                                            <input name="count_reposit"
+                                                                   value="{{ obj.count_set.first.id }}"
+                                                                   type="hidden">
+                                                            <a class="btn btn-transparent"><span><button
+                                                                    style="border:none"
+                                                                    type="submit"></button> </span></a>
+                                                        </form>
+                                                    </li>
+                                                    <li class="icon wishlist-icon">
+                                                        <form method="post"
+
+                                                              {% if obj.id in collect_favorite %}action='{% url 'favorite_product:remove' favorite_id=obj.id %}'
+                                                              {% else %} action='{{ favorite_url }}'{% endif %}>
+                                                            {% csrf_token %}
+
+                                                            <input name="salam" value="{{ obj.id }}" type="hidden">
+
+
+                                                            <a class="btn btn-transparent"><span
+                                                                    class="{% if obj.id in collect_favorite %}select_favarit{% endif %}"><button
+                                                                    style="border:none" type="submit"></button> </span></a>
+                                                        </form>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                            {% if obj.product_type == 'discount' %}
+                                <div class="item">
+                                    <div class="product-item">
+                                        <div class="product-image">
+                                            <div class="sale-label"><span>تخفیف</span></div>
+                                            <a href="{{ obj.get_absolute_url }}">
+                                                {% if obj.product_image %}
+                                                    <img src="{{ obj.product_image.url }}" alt="{{ obj.product_name }}">
+                                                {% endif %}
+                                            </a>
+                                        </div>
+                                        <div class="product-details-outer">
+                                            <div class="product-details">
+                                                <div class="product-title">
+                                                    <a href="{{ obj.get_absolute_url }}">{{ obj.product_name }}</a>
+                                                </div>
+                                                <div class="price-box">
+                                                    <span class="price">{{ obj.discount|intcomma:False }} تومان</span>
+                                                    <del class="price old-price">{{ obj.product_price|intcomma:False }}
+                                                        تومان
+                                                    </del>
+                                                </div>
+                                            </div>
+                                            <div class="product-details-btn">
+                                                <ul>
+                                                    <li class="icon cart-icon">
+                                                        <form method="post" action="{{ Cart_basker }}">
+                                                            {% csrf_token %}
+
+                                                            <input name="productid_small" value="{{ obj.id }}"
+                                                                   type="hidden">
+                                                            <input name="count_small" value="1" type="hidden">
+                                                            <input name="count_reposit"
+                                                                   value="{{ obj.count_set.first.id }}"
+                                                                   type="hidden">
+                                                            <a class="btn btn-transparent"><span><button
+                                                                    style="border:none"
+                                                                    type="submit"></button> </span></a>
+                                                        </form>
+                                                    </li>
+                                                    <li class="icon wishlist-icon">
+                                                        <form method="post"
+
+                                                              {% if obj.id in collect_favorite %}action='{% url 'favorite_product:remove' favorite_id=obj.id %}'
+                                                              {% else %} action='{{ favorite_url }}'{% endif %}>
+                                                            {% csrf_token %}
+
+                                                            <input name="salam" value="{{ obj.id }}" type="hidden">
+
+
+                                                            <a class="btn btn-transparent"><span
+                                                                    class="{% if obj.id in collect_favorite %}select_favarit{% endif %}"><button
+                                                                    style="border:none" type="submit"></button> </span></a>
+                                                        </form>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                            {% if obj.product_type == 'new' and obj.price_discount > 0 %}
+                                <div class="item">
+                                    <div class="product-item">
+                                        <div class="product-image">
+                                            <div class="sale-label"><span>تخفیف</span></div>
+                                            <div class="new-label"><span>جدید</span></div>
+                                            <a href="{{ obj.get_absolute_url }}">
+                                                {% if obj.product_image %}
+                                                    <img src="{{ obj.product_image.url }}" alt="{{ obj.product_name }}">
+                                                {% endif %}
+                                            </a>
+                                        </div>
+                                        <div class="product-details-outer">
+                                            <div class="product-details">
+                                                <div class="product-title">
+                                                    <a href="{{ obj.get_absolute_url }}">{{ obj.product_name }}</a>
+                                                </div>
+                                                <div class="price-box">
+                                                    <span class="price">{{ obj.discount|intcomma:False }} تومان</span>
+                                                    <del class="price old-price">{{ obj.product_price|intcomma:False }}
+                                                        تومان
+                                                    </del>
+                                                </div>
+                                            </div>
+                                            <div class="product-details-btn">
+                                                <ul>
+                                                    <li class="icon cart-icon">
+                                                        <form method="post" action="{{ Cart_basker }}">
+                                                            {% csrf_token %}
+
+                                                            <input name="productid_small" value="{{ obj.id }}"
+                                                                   type="hidden">
+                                                            <input name="count_small" value="1" type="hidden">
+                                                            <input name="count_reposit"
+                                                                   value="{{ obj.count_set.first.id }}"
+                                                                   type="hidden">
+                                                            <a class="btn btn-transparent"><span><button
+                                                                    style="border:none"
+                                                                    type="submit"></button> </span></a>
+                                                        </form>
+                                                    </li>
+                                                    <li class="icon wishlist-icon">
+                                                        <form method="post"
+
+                                                              {% if obj.id in collect_favorite %}action='{% url 'favorite_product:remove' favorite_id=obj.id %}'
+                                                              {% else %} action='{{ favorite_url }}'{% endif %}>
+                                                            {% csrf_token %}
+
+                                                            <input name="salam" value="{{ obj.id }}" type="hidden">
+
+
+                                                            <a class="btn btn-transparent"><span
+                                                                    class="{% if obj.id in collect_favorite %}select_favarit{% endif %}"><button
+                                                                    style="border:none" type="submit"></button> </span></a>
+                                                        </form>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {#    <section class="blog-section pb-100">#}
+    {#<div class="container">#}
+    {#<div class="row">#}
+    {#<div class="col-12">#}
+    {#<div class="heading-part text-center mb-30 mb-sm-20">#}
+    {#<h2 class="main_title">آخرین اخبار</h2>#}
+    {#</div>#}
+    {#</div>#}
+    {#</div>#}
+    {#<div class="blog-contant list-view mb_-30">#}
+    {#<div class="row">#}
+    {#<div class="col-lg-6">#}
+    {#<div class="blog-item first-blog">#}
+    {#<div class="blog-image">#}
+    {#<a href="{% static 'blog-detail.html' %}">#}
+    {#<img src="{% static 'images/blog-img1.jpg' %}" alt="">#}
+    {#</a>#}
+    {#</div>#}
+    {#<div class="blog-detail">#}
+    {#<span class="bloger-date">محمد محمدی 1 مهرماه 99</span>#}
+    {#<h3 class="head-three mb-10"><a href="{% static 'blog-detail.html' %}">بررسی نوع پوشش و حجاب زنان در دوره قاجار با نگاهی به آثار سیاحان خارجی این دوره</a></h3>#}
+    {#<p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.</p>#}
+    {#<a href="{% static 'blog-detail.html' %}" class="readmore-btn">بیشتر بخوانید</a>#}
+    {#</div>#}
+    {#</div>#}
+    {#</div>#}
+    {#<div class="col-lg-6">#}
+    {#<div class="row">#}
+    {#<div class="col-12">#}
+    {#<div class="blog-item">#}
+    {#<div class="blog-image">#}
+    {#<a href="{% static 'blog-detail.html' %}">#}
+    {#<img src="{% static 'images/blog-img2.jpg' %}" alt="">#}
+    {#</a>#}
+    {#</div>#}
+    {#<div class="blog-detail">#}
+    {#<span class="bloger-date">محمد محمدی 1 مهرماه 99</span>#}
+    {#<h3 class="head-three mb-10"><a href="{% static 'blog-detail.html' %}">بررسی نوع پوشش و حجاب زنان در دوره قاجار با نگاهی به آثار سیاحان خارجی این دوره</a></h3>#}
+    {#<p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.</p>#}
+    {#<a href="{% static 'blog-detail.html' %}" class="readmore-btn">بیشتر بخوانید</a>#}
+    {#</div>#}
+    {#</div>#}
+    {#</div>#}
+    {#<div class="col-12">#}
+    {#<div class="blog-item">#}
+    {#<div class="blog-image">#}
+    {#<a href="{% static 'blog-detail.html' %}">#}
+    {#<img src="{% static 'images/blog-img3.jpg' %}" alt="">#}
+    {#</a>#}
+    {#</div>#}
+    {#<div class="blog-detail">#}
+    {#<span class="bloger-date">محمد محمدی 1 مهرماه 99</span>#}
+    {#<h3 class="head-three mb-10"><a href="{% static 'blog-detail.html' %}">بررسی نوع پوشش و حجاب زنان در دوره قاجار با نگاهی به آثار سیاحان خارجی این دوره</a></h3>#}
+    {#<p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.</p>#}
+    {#<a href="{% static 'blog-detail.html' %}" class="readmore-btn">بیشتر بخوانید</a>#}
+    {#</div>#}
+    {#</div>#}
+    {#</div>#}
+    {#</div>#}
+    {#</div>#}
+    {#</div>#}
+    {#</div>#}
+    {#</div>#}
+    {#</section>#}
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,25 @@
+{% load static %}
+<div class="megamenu full mobile-sub-menu">
+    <div class="megamenu-inner-top">
+      <div class="row sub-menu-level1">
+            {% for collectss in collect_main %}
+                {% if collectss.gender in select_gender %}
+                <div class="col-lg-3 level2 ">
+                    <a href="{% url 'product:list_view_men' gender='women' cat=collectss.name_collect_product_main %}"><span>{{ collectss.title_collect_product_main }}</span></a>
+                    <ul class="sub-menu-level2">
+                        {% for collects in collectss.collect_product_set.all %}
+                            {% if collects.gender in select_gender %}
+
+                            <li class="level3"><a
+                                    href="{% url 'product:list_view_men' gender='women' cat=collects.name_collect_product_main %}"><span>■</span>{{ collects }}
+                            </a></li>
+                            {% endif %}
+                        {% endfor %}
+
+                    </ul>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,43 @@
+{% load render_partial %}
+{% load static %}
+<!DOCTYPE html>
+<html dir="rtl" lang="fa-IR">
+
+<head>
+
+    {% block title %}{% endblock %}
+
+    {% include 'Main_template/__header_code_template.html' %}
+
+</head>
+
+<body class="text-right">
+
+
+ {% render_partial 'Home_page.views.Search' %}
+
+
+<div class="main">
+
+
+    {% render_partial 'Home_page.views.Navigation' %}
+
+ {% if messages %}<div class="container" id="massage_fix"><div class="row"><div class="col-12 offset-md-2">{% for message in messages %}{% if message.tags == 'error' %}<div class="alert alert-danger alert-dismissible fade show" role="alert" id="massage_box">{% else %}<div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert" id="massage_box">{% endif %}{{ message }}</div>{% endfor %}</div></div></div></div>{% endif %}
+
+    {% block content %}
+    {% endblock %}
+
+    {% render_partial 'Home_page.views.Footer' %}
+
+
+
+    {% include 'Main_template/__footer_code_template.html' %}
+
+
+</div>
+
+{% block javascript %}
+{% endblock javascript %}
+
+</body>
+</html>

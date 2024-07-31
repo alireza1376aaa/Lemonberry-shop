@@ -1,0 +1,177 @@
+@font-face {
+    font-family: BKoodakBold;
+    src: url(BKoodakBold.eot);
+    src: local('b BYekan'),url(BKoodakBold.woff) format('woff'),url(BKoodakBold.ttf) format('truetype'),url(../BKoodakBold.svg) format('svg');
+    font-weight: 400;
+    font-style: normal
+}
+
+
+body,html {
+    margin: 0;
+    padding: 0
+}
+
+#factor_container {
+    font-family: BKoodakBold;
+    width: 950px;
+    min-height: 400px;
+    border: 2px solid #000;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: auto;
+    margin-left: auto;
+    border-radius: 3px;
+    direction: rtl;
+    background-color: #fff
+}
+
+#factor_header {
+    width: 100%;
+    height: 120px;
+    border-bottom: 2px solid #000;
+    position: relative
+}
+
+#header_right {
+    font-size: 14px;
+    margin-top: 40px;
+    width: 300px;
+    float: right
+}
+
+#header_center {
+    width: 350px;
+    height: 120px;
+    text-align: center;
+    float: right
+}
+
+#center_top {
+    font-size: 36px
+}
+
+#header_left {
+    font-size: 14px;
+    margin-top: 40px;
+    width: 300px;
+    float: left
+}
+
+#header_boxl {
+    width: 170px;
+    margin-right: auto;
+    margin-left: auto
+}
+
+#header_boxr {
+    width: 270px;
+    margin-right: auto;
+    margin-left: auto
+}
+
+table {
+    width: 95%;
+    cellpadding: 0;
+    cellspacing: 0;
+    border-collapse: collapse!important;
+    margin-left: auto;
+    margin-right: auto
+}
+
+table td {
+    border: 1px solid #000;
+    padding: 3px;
+    font-size: 14px;
+    text-align: center;
+    height: 30px
+}
+
+.table1 {
+    margin-top: 20px;
+    margin-bottom: 10px
+}
+
+.table2 {
+    width: 450px;
+    margin-bottom: 20px
+}
+
+#factor_footer {
+    border-top: 2px solid #000;
+    height: 180px;
+    position: relative;
+}
+
+#footer_top {
+    margin-right: 5px
+}
+
+#footer_left {
+    margin-top: 0;
+    float: left;
+    width: 300px
+}
+
+
+.flex {
+    display: flex;
+    justify-content: space-around;
+}
+.mr-1{
+ margin-right:4px ;
+}
+.ml-1{
+ margin-left:4px ;
+}
+.main_table{
+    background-color: #a2a2a2;
+}
+.table2 tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+.table2 tr:nth-child(even) {
+    background-color: #e1e1e1;
+}
+.sign {
+    position: absolute;
+    top: 92px;
+    left: 99px;
+    width: 218px;
+    transform: rotate(353deg);
+}
+.pardakt_img {
+    position: absolute;
+    width: 200px;
+    right: 31%;
+    top: 113px;
+    transform: rotate(345deg);
+    opacity: 0.7;
+}
+.ersal_img {
+    position: absolute;
+    top: 15%;
+    right: 36%;
+    width: 147px;
+    opacity: 0.7;
+    transform: rotate(3deg);
+}
+.print {
+    top: 15%;
+    left: 6%;
+}
+button {
+    background-color: #ef4056;
+    width: 100%;
+    height: 40px;
+    border: none;
+    color: white;
+    font-size: 15px;
+    font-family: 'BKoodakBold';
+    cursor: pointer;
+}
+@media print {
+    .print {
+        display: none!important
+    }
+}

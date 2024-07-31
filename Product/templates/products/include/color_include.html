@@ -1,0 +1,7 @@
+<option selected="selected" disabled hidden>رنگ خود را انتخاب کنید</option>
+
+{% for color_name in custom_color %}
+
+    <option value="{{ color_name.product_color }}">{{ color_name.product_color__product_color }}</option>
+
+{% endfor %}

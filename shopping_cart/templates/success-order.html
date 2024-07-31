@@ -1,0 +1,119 @@
+{% extends 'Main_template/__MAIN_tamplate.html' %}
+{% load static %}
+{% load humanize %}
+
+
+{% block content %}
+
+
+    <div class="contant">
+        <div id="banner-part" class="banner inner-banner">
+            <div class="container">
+                <div class="bread-crumb-main">
+                    <h1 class="banner-title">فاکتور خرید</h1>
+                    <div class="breadcrumb">
+                        <ul class="inline">
+                            <li><a href="/">خانه</a></li>
+                            <li>فاکتور خرید</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ptb-100">
+            <div class="cart-item-table commun-table">
+                <div class="table-responsive">
+                    <table class="table border mb-0">
+                        <thead>
+                        <tr>
+                            <th>تصویر</th>
+                            <th>نام محصول</th>
+                            <th>رنگ محصول</th>
+                            <th>سایز محصول</th>
+                            <th>قیمت</th>
+                            <th>تعداد</th>
+                            <th>مبلغ کل</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for basket in order.cart_set.all %}
+
+                            <tr>
+                                <td>
+                                    <a href="{{ basket.product_id.get_absolute_url }}">
+                                        <div class="product-image">
+                                            <img alt="Eshoper" src="{{ basket.product_id.product_image.url }}">
+                                        </div>
+                                    </a>
+                                </td>
+                                <td>
+                                    <div class="product-title">
+                                        <a href="{{ basket.product_id.get_absolute_url }}">{{ basket.product_id.product_name }}</a>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="color_product_cart ">
+                                        <span class="price">{{ basket.color_size.product_color }}</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="color_product_cart ">
+                                        <span class="price">{{ basket.color_size.product_size }} ({{ basket.color_size.product_size.product_unit }})</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <ul>
+                                        <li>
+                                            <div class="base-price price-box">
+                                                {% if basket.product_id.product_type == 'discount' %}
+                                                    <span class="price"> تومان{{ basket.product_id.discount|intcomma:False }}</span>
+                                                    <br>
+                                                    <del class="price old-price">
+                                                        تومان{{ basket.product_id.product_price|intcomma:False }}</del>
+
+                                                {% else %}
+                                                    <span class="price"> تومان{{ basket.product_id.product_price|intcomma:False }}</span>
+                                                {% endif %}
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </td>
+                                <td>
+                                    <div class="input-box">
+                                        <div class="custom-qty">
+                                            <p>{{ basket.count }}</p>
+                                        </div>
+
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="total-price price-box">
+                                        <span class="price">{{ basket.total_price|intcomma:False }} تومان</span>
+                                    </div>
+                                </td>
+
+                            </tr>
+
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="mb-30">
+                <div class="row">
+                    <div class="col-md-12 mt-5">
+                        <div class="mt-30 alert alert-success">
+                            <h2 class="text-center"> سفارش شما با موفقیت ثبت شد در این مرحله دیگه کار تمام است و مرسی که از این سایت تستی استفاده کردید </h2>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mt-30 left-side float-none-sm">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

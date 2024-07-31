@@ -1,0 +1,59 @@
+<div class="row">
+                    <div class="product-slider owl-carousel position-initial">
+                        {% for sugests in sugest%}
+                            {% for product_sugests in sugests %}
+                                <div class="item">
+                            <div class="product-item">
+                                <div class="product-image">
+                                    <a href="product-page.html">
+                                        <img src="{% product_sugests.product_image.url }}  %}" alt="">
+                                    </a>
+                                </div>
+                                <div class="product-details-outer">
+                                    <div class="product-details">
+                                        <div class="product-title">
+                                            <a href="product-page.html">{% product_sugests.product_name  %}</a>
+                                        </div>
+                                        <div class="price-box">
+                                            <span class="price">{% product_sugests.product_price  %} تومان</span>
+                                        </div>
+                                    </div>
+                                    <div class="product-details-btn">
+                                        <ul>
+                                            <li class="icon cart-icon">
+                                                <form method="post" action="/makecarts">
+                                                {% csrf_token %}
+
+                                                 <input name="productid_small" value="{{ product_sugests.id }}" type="hidden">
+                                                 <input name="count_small" value="1" type="hidden">
+
+
+
+                                                   <a  class="btn btn-transparent"><span><button style="border:none" type="submit"></button> </span></a>
+                                              </form>
+
+                                            </li>
+                                            <li class="icon wishlist-icon">
+                                                <form method="post" action="/makefavorite" >
+                                                {% csrf_token %}
+
+                                                 <input name="salam" value="{{ product_sugests.id }}"type="hidden">
+
+
+                                                   <a  class="btn btn-transparent"><span><button style="border:none" type="submit"></button> </span></a>
+                                              </form>
+
+                                            </li>
+
+                                         </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                             {% endfor %}
+                        {% endfor %}
+
+
+                     </div>
+                </div>

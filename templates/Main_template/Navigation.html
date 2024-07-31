@@ -1,0 +1,201 @@
+{% load static %}
+{% load humanize %}
+{% load render_partial %}
+{% url 'account:login' as Login %}
+{% url 'account:loginout' as Logout %}
+{% url 'account:register' as register %}
+{% url 'account:Edit' as edit %}
+{% url 'product:list_view_men' gender='men' cat='all' as menlist %}
+{% url 'product:list_view_men' gender='women' cat='all' as Womenlist %}
+{% url 'product:list_view_men' gender='kids' cat='all' as Kidslist %}
+{% url 'shopping_cart:carts' as carts %}
+{% url 'shopping_cart:finallt_carts' as finalcarts %}
+{% url 'sitesetting:contact_us_form' as contact_us %}
+{% url 'favorite_product:favorite_page' as favorite %}
+{% url 'shopping_cart:old_carts' as old_cart %}
+<div id="preloader"></div>
+
+
+<header id="header">
+    <div class="container position-r">
+        <div class="row m-0">
+            <div class="col-lg-3 col-md-4 col-4 p-0">
+                <div class="navbar-header">
+                    <a class="navbar-brand page-scroll" href="/">
+                        <img alt="logo" src="{{ site.logo_image.url  }}" id="logo_img">
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-8 col-8 p-0 position-initial">
+                <div class="left-side">
+                    <button data-target=".navbar-collapse" data-toggle="collapse"
+                            class="navbar-toggle d-block d-lg-none d-xl-none" type="button"><i class="fa fa-bars"></i>
+                    </button>
+                    <div class="overlay"></div>
+                    <div class="header-right-link">
+                        <ul>
+                            <li class="search-box">
+                                <a href="#"><span></span></a>
+                            </li>
+                            <li class="account-icon">
+                                <a href="#"><span></span></a>
+                                <div class="header-link-dropdown account-link-dropdown">
+                                    <ul class="link-dropdown-list">
+                                        <li><span class="dropdown-title">خوش آمدید {{ name }}</span>
+                                            <ul>
+                                                {% if not request.user.is_authenticated %}
+                                                    <li><a href="{{ Login }}">ورود اعضا</a></li>
+                                                    <li><a href="{{ register }}">ثبت نام</a></li>
+
+                                                {% else %}
+                                                    <li><a href="{{ edit }}">ویرایش اطلاعات</a></li>
+                                                    <li><a href="{{ Logout }}">خروج</a></li>
+                                                {% endif %}
+                                            </ul>
+                                        </li>
+                                        {% if request.user.is_authenticated %}
+                                        <li><span class="dropdown-title">سبد خرید</span>
+                                            <ul>
+
+                                                <li class="level3"><a href="{{ carts }}">سبد خرید</a></li>
+                                                <li class="level3"><a href="{{ finalcarts }}">ثبت نهایی</a></li>
+                                                <li class="level3"><a href="{{ old_cart }}" >سوابق خرید</a></li>
+
+                                            </ul>
+                                        </li>
+                                        <li><span class="dropdown-title">علاقه مندی ها</span>
+                                            <ul>
+
+                                                <li class="level3"><a href="{{ favorite }}">علاقه مندی ها</a></li>
+                                            </ul>
+                                        </li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="cart-icon">
+                                <a href="{{ carts }}"> <span> <small class="cart-notification">{{ len }}</small> </span>
+                                </a>
+                                <div class="cart-dropdown header-link-dropdown">
+                                    <ul class="cart-list link-dropdown-list">
+                                        {% for basket in order.cart_set.all %}
+                                            <li>
+                                                <a href="{% url 'shopping_cart:remove' detail_id=basket.id %}"
+                                                   class="close-cart"><i class="fa fa-times-circle"></i></a>
+                                                <figure>
+                                                    <a href="{{ basket.product_id.get_absolute_url }}"
+                                                       class="pull-right">
+                                                        <img alt="" src="{{ basket.product_id.product_image.url }}">
+                                                    </a>
+                                                    <figcaption>
+                            <span>
+                            <a href="{{ basket.product_id.get_absolute_url }}">{{ basket.product_id.product_name }}</a>
+                            </span>
+                                                        {% if basket.product_id.product_type == 'discount' %}
+                                                            <p class="cart-price">{{ basket.product_id.discount|intcomma:False }}
+                                                                تومان</p>
+                                                        {% else %}
+                                                            <p class="cart-price">{{ basket.product_id.product_price|intcomma:False }}
+                                                                تومان</p>
+                                                        {% endif %}
+
+                                                        <div class="product-qty">
+                                                            <label>تعداد</label>
+                                                            <div class="custom-qty">
+                                                                {{ basket.count }}
+                                                            </div>
+                                                        </div>
+                                                    </figcaption>
+                                                </figure>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                    <p class="cart-sub-totle">
+                                        <span class="pull-right">مبلغ کل</span>
+                                        <span class="pull-left">
+                            <strong class="price-box">{{ total|intcomma:False }} تومان</strong>
+                            </span>
+                                    </p>
+                                    <div class="clearfix"></div>
+                                    <div class="mt-20">
+                                        <a href="{{ carts }}" class="btn-color btn">سبدخرید</a>
+                                        <a{% if order %} href="{{ finalcarts }}"{% endif %}
+                                           class="btn-color btn left-side {% if total ==  0 %}disabled {% endif %}">ثبت
+                                            نهایی</a>
+
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="menu" class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <li class="level">
+                                <a href="/" class="nav-link">خانه</a>
+                            </li>
+                            <li class="level dropdown">
+                                <span class="opener plus"></span>
+                                <a href="{{ Womenlist }}" class="nav-link">بانوان</a>
+                                {% render_partial 'women_nav' %}
+                            </li>
+                            <li class="level dropdown">
+                                <span class="opener plus"></span>
+                                <a href="{{ menlist }}" class="nav-link">آقایان</a>
+                                {% render_partial 'men_nav' %}
+                            </li>
+
+                            <li class="level">
+                                <span class="opener plus"></span>
+                                <a href="{{ Kidslist }}" class="nav-link">بچه گانه</a>
+                                {% render_partial 'kids_nav' %}
+
+                            </li>
+                            <li class="level dropdown">
+                                <a href="{{ contact_us }}" class="nav-link">تماس با ما</a>
+
+                            </li>
+                            <li class="level dropdown">
+                                {#                                <span class="opener plus"></span>#}
+                                {#                                <a href="{% static 'blog-left-col.html' %}">بلاگ</a>#}
+                                {#                                <div class="megamenu mobile-sub-menu">#}
+                                {#                                    <div class="megamenu-inner-top">#}
+                                {#                                        <ul class="sub-menu-level1">#}
+                                {#                                            <li class="level2 ">#}
+                                {#                                                <ul class="sub-menu-level2">#}
+                                {#                                                    <li class="level3"><a href="{% static 'blog-left-col.html' %}"><span>■</span>بلاگ سایدبار چپ</a></li>#}
+                                {#                                                    <li class="level3"><a href="{% static 'blog-right-col.html' %}"><span>■</span>بلاگ سایدبار راست</a></li>#}
+                                {#                                                    <li class="level3"><a href="{% static 'blog-detail.html' %}"><span>■</span>صفحه خبر</a></li>#}
+                                {#                                                </ul>#}
+                                {#                                            </li>#}
+                                {#                                        </ul>#}
+                                {#                                    </div>#}
+                                {#                                </div>#}
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

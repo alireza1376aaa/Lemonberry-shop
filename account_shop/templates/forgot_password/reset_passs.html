@@ -1,0 +1,68 @@
+{% extends 'Main_template/__MAIN_tamplate.html' %}
+{% load static %}
+
+
+{% block content %}
+
+<div class="contant">
+    <div id="banner-part" class="banner inner-banner">
+        <div class="container">
+             <div class="bread-crumb-main">
+                <h1 class="banner-title"> رمز عبور جدید</h1>
+                 <div class="breadcrumb">
+                     <ul class="inline">
+                        <li><a href="/">خانه</a></li>
+                        <li> رمز عبور جدید</li>
+                     </ul>
+                 </div>
+             </div>
+        </div>
+    </div>
+    <div class="ptb-100">
+        <div class="container">
+             <div class="row justify-content-center">
+                <div class="col-xl-6 col-lg-8 col-md-8 ">
+                    <form class="main-form full" method="post">
+                        {% csrf_token %}
+                         <div class="row">
+                                <div class="col-12 mb-20">
+                                    <div class="heading-part align-center">
+                                    <h2 class="heading"> رمز عبور جدید</h2>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="{{edit_form.password.id_for_lable}}">{{ edit_form.password.label }}</label>
+                                        {{ edit_form.password }}
+
+                                    </div>
+
+                                </div>
+                          <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="{{edit_form.password_again.id_for_lable}}">{{ edit_form.password_again.label }}</label>
+                                        {{ edit_form.password_again }}
+                                         {% for error in edit_form.password_again.errors %}
+
+                                                    <div id="emailHelp" class="form-text text-danger"><p>{{ error }}</p></div>
+
+                                          {% endfor %}
+
+                                    </div>
+
+                                </div>
+                                <div class="col-12">
+                                    <div class="mb-30 dit w-100">
+                                        <button name="submit" type="submit" class="btn-color right-side">ارسال ایمیل بازیابی رمز عبور</button>
+                                    </div>
+                                </div>
+
+                         </div>
+                     </form>
+                </div>
+             </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

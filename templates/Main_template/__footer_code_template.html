@@ -1,0 +1,34 @@
+{% load static %}
+
+
+<script data-cfasync="false" src="{% static '/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js' %}"></script><script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+<script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+<script src="{% static 'js/modernizr.js' %}"></script>
+
+<script>
+	    /* ------------ Newslater-popup JS Start ------------- */
+	    $(window).on('load', function () {
+		setTimeout(function () {
+		    jQuery.magnificPopup.open({
+			items: {src: '{% static '#newslater-popup' %}'}, type: 'inline'}, 0);
+		}, 1000)
+	    });
+	    /* ------------ Newslater-popup JS End ------------- */
+</script>-->
+
+<script>
+		$(document).ready(function () {
+		    //If your <ul> has the id "glasscase"
+		    $('#glasscase').glassCase({
+			'thumbsPosition': 'bottom',
+			'widthDisplayPerc': 100,
+			isDownloadEnabled: false,
+			zoomPosition :'left',
+		    });
+		});
+</script>
+<script src="{% static 'js/custom.js' %}"></script>
+
+{% block javascript %}{% endblock %}

@@ -1,0 +1,162 @@
+{% extends 'Main_template/__MAIN_tamplate.html' %}
+{% load static %}
+{% load render_partial %}
+{% load humanize %}
+
+{% block content %}
+
+    <div class="contant">
+        <div id="banner-part" class="banner inner-banner">
+            <div class="container">
+                <div class="bread-crumb-main">
+                    <h1 class="banner-title">دسته بندی</h1>
+                    <div class="breadcrumb">
+                        <ul class="inline">
+                            <li><a href="/">خانه</a></li>
+                            <li>دسته بندی</li>
+                            {% if select_gender.1 == 'women' %}
+                            <li>زنانه</li>
+                            {% elif select_gender.1 == 'men' %}
+                            <li>مردانه</li>
+                            {% else %}
+                            <li>کودکانه</li>
+                            {% endif %}
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ptb-100">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-lg-4 col-xl-3">
+                        {% include 'products/Filter/Filter_men.html' %}
+                    </div>
+                    <div class="col-12 col-lg-8 col-xl-9">
+                        <div class="shorting mb-30">
+                            <form method="post" class="main-form full">
+                                {% csrf_token %}
+
+                                <div class="row">
+                                    <div class="col-lg-6">
+
+                                        <div class="view">
+                                            <div class="list-types grid active">
+                                                <a>
+                                                    <div class="grid-icon list-types-icon"></div>
+                                                </a>
+                                            </div>
+
+                                        </div>
+                                        <div class="short-by float-right-md"><span>مرتب سازی</span>
+                                            <div class="select-item">
+                                                {{ form.filter_pro }}
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="show-item left-side float-left-md"><span>نمایش</span>
+                                            <div class="select-item">
+                                                {{ form.page_num }}
+
+
+                                            </div>
+                                            <span>هر صفحه</span>
+                                            <div class="compare float-right-sm">
+                                                <button type="submit" class="btn btn-color">اعمال</button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="product-section grid-view">
+                        <div class="row">
+
+                            {% if order_filter_number == '1' %}
+                                {% for obj in page_obj|dictsort:'product_name' %}
+                                    {% include 'products/product/my product.html' %}
+                                {% endfor %}
+
+                            {% elif order_filter_number == '2' %}
+                                {% for obj in page_obj|dictsortreversed:'product_visit' %}
+                                    {% include 'products/product/my product.html' %}
+                                {% endfor %}
+
+                            {% elif order_filter_number == '3' %}
+                                {% for obj in page_obj|dictsortreversed:'product_price' %}
+                                    {% include 'products/product/my product.html' %}
+                                {% endfor %}
+
+                            {% elif order_filter_number == '4' %}
+                                {% for obj in page_obj|dictsort:'product_price' %}
+                                    {% include 'products/product/my product.html' %}
+                                {% endfor %}
+
+                            {% elif order_filter_number == '5' %}
+                                {% for obj in page_obj|dictsortreversed:'product_date' %}
+                                    {% include 'products/product/my product.html' %}
+                                {% endfor %}
+
+                            {% else %}
+
+                                {% for obj in page_obj %}
+                                    {% include 'products/product/my product.html' %}
+                                {% endfor %}
+
+                            {% endif %}
+
+
+                        </div>
+                    </div>
+                    <div class="shorting center-md">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="pagination-bar">
+                                    <ul>
+
+                                        {% if page_obj.has_previous %}
+
+                                            <li><a href="?page={{ page_obj.previous_page_number }}&{{ path }}"><i
+                                                    class="fa fa-angle-right"></i></a></li>
+
+                                        {% endif %}
+                                        {% for page in page_obj.paginator %}
+                                            {% if page.number == page_obj.number %}
+                                                <li class="active"><a
+                                                        href="?page={{ page.number }}&{{ path }}">{{ page.number }}</a></li>
+                                            {% else %}
+
+                                                <li><a href="?page={{ page.number }}&{{ path }}">{{ page.number }}</a></li>
+
+                                            {% endif %}
+                                        {% endfor %}
+                                        {% if page_obj.has_next %}
+
+                                            <li><a href="?page={{ page_obj.next_page_number }}&{{ path }}"><i
+                                                    class="fa fa-angle-left"></i></a></li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="show-item left-side float-none-md">
+                                    <span class="float-none-md d-block">نمایش {{ page_obj.number }} از {{ page_obj.paginator.num_pages }} صفحه</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+{% endblock %}
+
+{% block javascript %}
+    <script src="{% static 'js/mycustom.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,130 @@
+{% extends 'Main_template/__MAIN_tamplate.html' %}
+{% load static %}
+
+
+{% block content %}
+
+    <div class="contant">
+        <div id="banner-part" class="banner inner-banner">
+            <div class="container">
+                <div class="bread-crumb-main">
+                    <h1 class="banner-title">تماس با ما</h1>
+                    <div class="breadcrumb">
+                        <ul class="inline">
+                            <li><a href="/">خانه</a></li>
+                            <li>تماس با ما</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="contact-part pt-100">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="add-map pb-100">
+                            <div style="width: 100%">
+                                <iframe width="100%" height="600" frameborder="0" scrolling="no" marginheight="0"
+                                        marginwidth="0" src="{{ object.address_url }}"></iframe>
+                            </div>
+                        </div>
+                        <div class="pb-100">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="contact-box mb-sm-20">
+                                        <ul>
+                                            <li>
+                                                <div class="contact-thumb">
+                                                    <img src="{% static 'images/address-icon.svg' %}"
+                                                         alt="address-icon.svg">
+                                                </div>
+                                                <div class="contact-box-detail">
+                                                    <h4 class="contact-title">دفتر مرکزی</h4>
+                                                    <p>{{ object.address }}</p>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="contact-thumb">
+                                                    <img src="{% static 'images/mail-icon.svg' %}" alt="mail-icon.svg">
+                                                </div>
+                                                <div class="contact-box-detail">
+                                                    <h4 class="contact-title">ایمیل</h4>
+                                                    <p><span class="__cf_email__"
+                                                             data-cfemail="8cefe3e2f8edeff8cce5feede2fff8f5e0e9a2f8e9e1fce0edf8e9">{{ object.email }}</span>
+                                                    </p>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="contact-thumb">
+                                                    <img src="{% static 'images/phone-icon.svg' %}"
+                                                         alt="phone-icon.svg">
+                                                </div>
+                                                <div class="contact-box-detail">
+                                                    <h4 class="contact-title">شماره تماس</h4>
+                                                    <p>{{ object.phone }}</p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="heading-part mb-30">
+                                        <h3>تیکت پشتیبانی</h3>
+                                        {% if form.is_valid %}
+                                            <div class="alert alert-success" role="alert">
+                                                {{ massage }}
+                                            </div>
+
+                                        {% endif %}
+
+                                    </div>
+                                    <div class="form-detail">
+                                        <form class="main-form" method="post">
+                                            {% csrf_token %}
+                                            <div class="row">
+                                                <div class="col-lg-4 col-md-6 col-12">
+                                                    <div class="form-group">
+                                                        {{ form.fullname }}
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-6 col-12">
+                                                    <div class="form-group">
+                                                        {{ form.subject }}
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-12">
+                                                    <div class="form-group">
+                                                        {{ form.email }}
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        {{ form.massege }}
+                                                    </div>
+
+                                                </div>
+
+
+                                                <div class="col-12">
+                                                    <button type="submit" class="btn-color">ارسال</button>
+
+
+                                                </div>
+
+
+                                            </div>
+
+                                        </form>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

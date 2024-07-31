@@ -1,0 +1,93 @@
+{% extends 'Main_template/__MAIN_tamplate.html' %}
+{% load static %}
+{% block content %}
+{% url 'account:login' as Log_in %}
+
+    <div class="contant">
+        <div id="banner-part" class="banner inner-banner">
+            <div class="container">
+                <div class="bread-crumb-main">
+                    <h1 class="banner-title">ثبت نام</h1>
+                    <div class="breadcrumb">
+                        <ul class="inline">
+                            <li><a href="/">خانه</a></li>
+                            <li>ثبت نام</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="ptb-100">
+            <div id="show_container" class="container">
+                <div class="row justify-content-center">
+                    <div class="col-xl-6 col-lg-8 col-md-8 ">
+                        <form class="main-form full" method="post">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-12 mb-20">
+                                    <div class="heading-part align-center">
+                                        <h2 class="heading">ثبت نام</h2>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="{{ register_form.phone.id_for_lable }}">{{ register_form.phone.label }}</label>
+                                        {{ register_form.phone }}
+
+                                        {% for error in register_form.phone.errors %}
+                                            <div id="emailHelp" class="form-text text-danger "><p>{{ error }}</p></div>
+
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="{{ register_form.email.id_for_lable }}">{{ register_form.email.label }}</label>
+                                        {{ register_form.email }}
+                                        {% for error in register_form.email.errors %}
+                                            <div id="emailHelp" class="form-text text-danger"><p>{{ error }}</p></div>
+
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="{{ register_form.password.id_for_lable }}">{{ register_form.password.label }}</label>
+                                        {{ register_form.password }}
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="{{ register_form.password_again.id_for_lable }}">{{ register_form.password_again.label }}</label>
+                                        {{ register_form.password_again }}
+                                        {% for error in register_form.password_again.errors %}
+                                            <div id="emailHelp" class="form-text text-danger"><p>{{ error }}</p></div>
+
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="mb-30 dit w-100">
+                                        <div class="check-box left-side mt-15">
+                                        </div>
+                                        <button name="submit" type="submit" class="btn-color right-side">ثبت نام
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <hr>
+                                    <div class="new-account align-center mt-20"><span>حساب کاربری دارید ؟</span>
+                                        <a class="link" title="Login Here" href="{{ Log_in }}">وارد شوید</a></div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascript %}
+
+{% endblock javascript %}

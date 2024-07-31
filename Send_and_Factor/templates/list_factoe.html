@@ -1,0 +1,73 @@
+{% extends 'Main_template/__MAIN_tamplate.html' %}
+{% load static %}
+
+
+{% block content %}
+
+
+    <div class="contant">
+        <div id="banner-part" class="banner inner-banner">
+            <div class="container">
+                <div class="bread-crumb-main">
+                    <h1 class="banner-title">لیست فاکتورها</h1>
+                    <div class="breadcrumb">
+                        <ul class="inline">
+                            <li><a href="{% url 'home_page' %}">خانه</a></li>
+                            <li>لیست فاکتور</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <h3 class="mt-5 text-center">تعداد فاکتور های باز : {{ count }}</h3>
+
+        <div class="ptb-100 row justify-content-center">
+            <table class="table table-hover col-10 " id="table_factor">
+                <thead>
+                <tr>
+                    <th scope="col">ردیف</th>
+                    <th scope="col">شماره فاکتور</th>
+                    <th scope="col">تاریخ</th>
+                    <th scope="col">شهر</th>
+                    <th scope="col">تلفن</th>
+                    <th scope="col">ادرس</th>
+                    <th scope="col">وضعیت ارسال</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for object in object_list %}
+                    <tr>
+                        <a href="{% url 'Factor:show_factor' code_factor=object.Order_number %}">
+
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>
+                                <a href="{% url 'Factor:show_factor' code_factor=object.Order_number %}">{{ object.Order_number }}</a>
+                            </td>
+                            <td>{{ object.date }}</td>
+                            <td>{{ object.user_id.finally_order_set.first.city }}</td>
+                            <td>{{ object.user_id.phone }}</td>
+                            <td>{{ object.user_id.finally_order_set.first.address }}</td>
+                            <td>
+                                <input type="checkbox" name="" id="" value=""
+                                       {% if object.send_factor_set.first.send %}checked disabled{% endif %}>
+                            </td>
+
+                        </a>
+
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+
+
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block javascript %}
+    <script src="{% static 'js/mycustom.js' %}"></script>
+{% endblock %}

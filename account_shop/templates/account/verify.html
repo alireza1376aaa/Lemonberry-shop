@@ -1,0 +1,74 @@
+{% extends 'Main_template/__MAIN_tamplate.html' %}
+{% load static %}
+{% block content %}
+
+    <div class="contant" id="alireza">
+        <div class="ptb-100">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-xl-6 col-lg-6 col-md-6 text-center custom_very">
+                        <form class="main-form full" method="post">
+                            {% csrf_token %}
+                            <div class="row flex-column align-items-center">
+                                <div class="col-12 mb-20">
+                                    <div class="heading-part align-center">
+                                        <h2 class="heading mt-5">فعال سازی حساب کاربری</h2>
+                                    </div>
+                                </div>
+                                <div class="col-12 d-flex justify-content-center">
+                                    <div class="form-group col-5">
+                                        <label for="verify_code_box">کد خود را وارد کنید</label>
+                                        <input name="code" onkeyup="getcode()" id="verify_code_box" type="text"
+                                               class="form-control mt-1" maxlength="5">
+                                    </div>
+                                </div>
+                                <p class="" id="massage_very1"></p>
+                                <p class="" id="massage_very2"></p>
+
+                                <div id="Timer" class="text-center">
+                                    <h3 id="val_timer">01:00</h3>
+                                </div>
+                                <a onclick="sendagain()" id="send_again_code" class="send_again btn btn-black disabled">ارسال
+                                    دوباره کد </a>
+                                <a href="{% url 'account:register' %}" class="btn btn-light mt-5">ویرایش اطلاعات</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block javascript %}
+    <script src="{% static 'js/mycustom.js' %}"></script>
+    <script>
+
+        $(document).ready(function () {
+            var code_again = 'False'
+
+        });
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        async function delayedLoop() {
+            var delay = 1000; // 1 second
+            $('#send_again_code').addClass('disabled')
+
+            for (var i = 60; i >= 0; i--) {
+                if (i > 9) {
+                    $('#val_timer').text('00:' + i)
+                } else {
+                    $('#val_timer').text('00:0' + i)
+                }
+                await sleep(delay);
+            }
+            $('#send_again_code').removeClass('disabled')
+
+        }
+
+        delayedLoop();
+    </script>
+{% endblock javascript %}
